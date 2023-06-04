@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
  * @author Jeanne 2023/5/29
  **/
 @Service
-public class CommonPointcuts {
+public class PermissionService {
 
     @PermissionAnnotation
     public String dataAccessOperation() {

@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Slf4j
 @Component
-
-public class BeforeExample {
+public class InlinePointcutAspect {
     //        @Around("execution( * com..*.service..*.*(..))&& args(..)")
 //    @Around("execution( * com..*.service..*.dataAccessOperation(..))&& args(..)")
 //    @Around("execution( * com..*.service..*.dataAccessOperation(..))&& args(..,count)")

@@ -1,36 +1,163 @@
 package com.jeanne.lowcode.searchservice.aspect;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jeanne 2023/5/29
  **/
 @Aspect
+@Slf4j
+@Component
 public class NotVeryUsefulAspect {
+
     @Pointcut("execution(* transfer(..))") // the pointcut expression
-    private void anyOldTransfer() {} // the pointcut signature
+    private void anyOldTransfer() {
+    } // the pointcut signature
 
     @Pointcut("execution(public * *(..))")
-    public void publicMethod() {}
+    public void publicMethod() {
+    }
 
-    @Pointcut("within(com.jeanne.lowcode.searchservice..*)")
-    public void inTrading() {}
+    @Around("anyOldTransfer()")
+    @AdviceName("en-tr-sssss")
+    public Object enhanceAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        log.info("<-----------------enhanceAround1----------------------->");
+        Object r = joinPoint.proceed();
+        log.info("<-----------------enhanceAround2----------------------->");
 
-    @Pointcut("publicMethod() && inTrading()")
-    public void tradingOperation() {}
+        return r;
+    }
 
+    @Before("anyOldTransfer()")
+    public void enhanceBefore() {
+        log.info("<-----------------enhanceBefore----------------------->");
+    }
+
+
+    @After("anyOldTransfer()")
+    public void enhanceAfter() {
+        log.info("<-----------------enhanceAfter----------------------->");
+    }
+
+    @AfterReturning("anyOldTransfer()")
+    public void enhancAfterReturning() {
+        log.info("<-----------------enhancAfterReturning----------------------->");
+    }
+
+    @AfterThrowing("anyOldTransfer()")
+    public void enhancAfterThrowing() {
+        log.info("<-----------------enhancAfterThrowing----------------------->");
+    }
+
+
+    /*
+     *  * within: Limits matching to join points within certain types (the execution of a method declared within a matching type when using Spring AOP).
+     */
+//    @Pointcut("within(com.jeanne.lowcode.searchservice.service..*)")
+//    public void inTrading() {
+//    }
+//
+//    @Before("inTrading()")
+//    public void beoforeWithin() {
+//        log.info("<-----------------beofore--Within----------------------->");
+//    }
+
+//    @Pointcut("within(com.jeanne.lowcode.searchservice.service.NotVeryUsefulService)")
+//    public void inTrading2() {
+//    }
+//
+//    @Before("inTrading()")
+//    public void beoforeWithin2() {
+//        log.info("<-----------------beofore--Within2----------------------->");
+//    }
+
+
+    /**
+     * * this: Limits matching to join points (the execution of methods when using Spring AOP) where the bean reference (Spring AOP proxy) is an instance of the given type.
+     * *必须全限定名
+     * * target: Limits matching to join points (the execution of methods when using Spring AOP) where the target object (application object being proxied) is an instance of the given type.
+     * *
+     */
+//    @Pointcut("this(com.jeanne.lowcode.searchservice.service.NotVeryUsefulService)")
+//    public void thisDemoPointcut() {
+//    }
+//    @Before("thisDemoPointcut()")
+//    public void beoforeThisDemoPointcut() {
+//        log.info("<-----------------before---NotVeryUsefulService--this----------------------->");
+//    }
+    @Pointcut("this(com.jeanne.lowcode.searchservice.service.NotVeryUsefulInterface)")
+    public void thisDemoPointcut2() {
+    }
+
+    @Before("thisDemoPointcut2()")
+    public void beoforeThisDemoPointcut2() {
+        log.info("<-----------------before---This--interface----------------------->");
+    }
+ @Pointcut("this(com.jeanne.lowcode.searchservice.service.NotVeryUsefulService)")
+    public void thisService() {
+    }
+
+    @Before("thisService()")
+    public void beoforeThisService() {
+        log.info("<-----------------before---This--service----------------------->");
+    }
+
+//    @Pointcut("this(com.jeanne.lowcode.searchservice.service.CommonService)")
+//    public void thisDemoPointcut3() {
+//    }
+//
+//    @Before("thisDemoPointcut3()")
+//    public void beoforeThisDemoPointcut3() {
+//        log.info("<-----------------before---ThisDemoPointcut3----------------------->");
+//    }
+//    @Pointcut("target(com.jeanne.lowcode.searchservice.service.NotVeryUsefulService)")
+//    public void targetDemoPointcut() {
+//    }
+//
+//    @Before("targetDemoPointcut()")
+//    public void beforeTargetDemoPointcut() {
+//        log.info("<-----------------before---NotVeryUsefulService--target----------------------->");
+//    }
+
+    @Pointcut("target(com.jeanne.lowcode.searchservice.service.NotVeryUsefulInterface)")
+    public void targetDemoPointcut2() {
+    }
+
+    @Before("targetDemoPointcut2()")
+    public void beoforeTargetDemoPointcut2() {
+        log.info("<-----------------before---target---interface----------------------->");
+    }
+
+    @Pointcut("target(com.jeanne.lowcode.searchservice.service.NotVeryUsefulService)")
+    public void targetService() {
+    }
+
+    @Before("targetService()")
+    public void beoforeTargetService() {
+        log.info("<-----------------before---target--service----------------------->");
+    }
+
+//    @Pointcut("target(com.jeanne.lowcode.searchservice.service.CommonService)")
+//    public void targetDemoPointcut3() {
+//    }
+//
+//    @Before("targetDemoPointcut3()")
+//    public void beforeTargetDemoPointcut3() {
+//        log.info("<-----------------before---Target--DemoPointcut3----------------------->");
+//    }
+
+
+//    @Pointcut("publicMethod() && inTrading()")
+//    public void tradingOperation() {
+//    }
 
 
     /**
      * execution: For matching method execution join points. This is the primary pointcut designator to use when working with Spring AOP.
      *
-     * within: Limits matching to join points within certain types (the execution of a method declared within a matching type when using Spring AOP).
-     *
-     * this: Limits matching to join points (the execution of methods when using Spring AOP) where the bean reference (Spring AOP proxy) is an instance of the given type.
-     *
-     * target: Limits matching to join points (the execution of methods when using Spring AOP) where the target object (application object being proxied) is an instance of the given type.
      *
      * args: Limits matching to join points (the execution of methods when using Spring AOP) where the arguments are instances of the given types.
      *

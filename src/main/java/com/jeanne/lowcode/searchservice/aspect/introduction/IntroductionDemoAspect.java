@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class IntroductionDemoAspect {
-    @DeclareParents(value = "com.jeanne.lowcode.searchservice.service.CommonPointcuts", defaultImpl = DemoInterfaceImpl.class)
+    @DeclareParents(value = "com.jeanne.lowcode.searchservice.service.PermissionService", defaultImpl = DemoInterfaceImpl.class)
     private DemoInterface demoInterface;
 
 }

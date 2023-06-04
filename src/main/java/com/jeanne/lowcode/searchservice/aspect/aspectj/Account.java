@@ -1,8 +1,6 @@
 package com.jeanne.lowcode.searchservice.aspect.aspectj;
 
-import com.jeanne.lowcode.searchservice.service.CommonPointcuts;
 import com.jeanne.lowcode.searchservice.service.CommonService;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
