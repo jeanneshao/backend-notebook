@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
  * @author Jeanne 2023/5/29
  **/
 @Service
+@PermissionAnnotation
 public class PermissionService {
 
     @PermissionAnnotation

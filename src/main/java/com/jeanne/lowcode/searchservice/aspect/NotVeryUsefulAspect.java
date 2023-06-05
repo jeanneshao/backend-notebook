@@ -31,9 +31,10 @@ public class NotVeryUsefulAspect {
         return r;
     }
 
+
     @Before("anyOldTransfer()")
     public void enhanceBefore() {
-        log.info("<-----------------enhanceBefore----------------------->");
+        log.info("<----------------before-anyOldTransfer----------------------->");
     }
 
 
@@ -96,13 +97,45 @@ public class NotVeryUsefulAspect {
     public void beoforeThisDemoPointcut2() {
         log.info("<-----------------before---This--interface----------------------->");
     }
- @Pointcut("this(com.jeanne.lowcode.searchservice.service.NotVeryUsefulService)")
+
+    @Pointcut("this(com.jeanne.lowcode.searchservice.service.NotVeryUsefulService)")
     public void thisService() {
     }
 
     @Before("thisService()")
     public void beoforeThisService() {
         log.info("<-----------------before---This--service----------------------->");
+    }
+
+    @Pointcut("anyOldTransfer() && @args(com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation)")
+    private void runtimeArgAnnotation() {
+    }
+
+    @Before("runtimeArgAnnotation()")
+    public void beoforehasArgAnnotations() {
+        log.info("<-----------------before---beoforehasArgAnnotations----------------------->");
+    }
+
+    @Pointcut("anyOldTransfer() && args(java.lang.Integer)")
+    private void hasArgs() {
+    }
+
+    @Before("hasArgs()")
+    public void beoforehasArgs() {
+        log.info("<-----------------before---hasArgs----------------------->");
+    }
+
+    /**
+     * @target要求对象的运行时类型与被注解的类型是同一个类型
+     * @within要求对象的运行时类型是被注解的类型的子类
+     */
+    @Pointcut("anyOldTransfer() && @within(com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation)")
+    private void hasWithinAnno() {
+    }
+
+    @Before("hasWithinAnno()")
+    public void beoforeWithinAnno() {
+        log.info("<-----------------before---hasWithinAnno----------------------->");
     }
 
 //    @Pointcut("this(com.jeanne.lowcode.searchservice.service.CommonService)")
@@ -138,6 +171,15 @@ public class NotVeryUsefulAspect {
     @Before("targetService()")
     public void beoforeTargetService() {
         log.info("<-----------------before---target--service----------------------->");
+    }
+
+
+    @Pointcut("@annotation(com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation)")
+    private void hasAnnotation() {
+    }
+
+    @Pointcut("@target(com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation)")
+    private void runtimeAnnotation() {
     }
 
 //    @Pointcut("target(com.jeanne.lowcode.searchservice.service.CommonService)")

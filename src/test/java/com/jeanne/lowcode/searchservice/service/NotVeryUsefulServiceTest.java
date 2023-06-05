@@ -1,12 +1,12 @@
 package com.jeanne.lowcode.searchservice.service;
 
 import com.jeanne.lowcode.searchservice.aspect.NotVeryUsefulAspect;
+import com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation;
 import com.jeanne.lowcode.searchservice.config.AopConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 import org.springframework.aop.framework.ProxyConfig;
-import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -15,7 +15,6 @@ import org.springframework.context.LifecycleProcessor;
 import org.springframework.web.context.support.StandardServletEnvironment;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Proxy;
 
 /**
  * @author Jeanne 2023/6/1
@@ -28,6 +27,9 @@ class NotVeryUsefulServiceTest {
     NotVeryUsefulInterface notVeryUsefulService;
 
     @Resource
+    PermissionService permissionService;
+
+    @Resource
     AopConfig aopConfig;
 
     @Resource
@@ -36,6 +38,23 @@ class NotVeryUsefulServiceTest {
     @Test
     void transfer() {
         notVeryUsefulService.transfer();
+    }
+
+    @Test
+    void transferInteger() {
+        notVeryUsefulService.transfer(33);
+    }
+
+    @Test
+    void transferAnnot() {
+//        System.out.println("<============permissionService类名称：" + permissionService.getClass().getName());
+//        notVeryUsefulService.transfer(permissionService);
+        notVeryUsefulService.transfer(new Annotated());
+    }
+
+    @PermissionAnnotation
+    class Annotated{
+
     }
 
     @Test
@@ -50,13 +69,13 @@ class NotVeryUsefulServiceTest {
     }
 
     @Test
-    public void testWithin(){
+    public void testWithin() {
         notVeryUsefulService.within();
     }
 
     @Test
-    public void testthisDemo(){
-        System.out.println("<============类名称："+notVeryUsefulService.getClass().getName());
+    public void testthisDemo() {
+        System.out.println("<============类名称：" + notVeryUsefulService.getClass().getName());
         notVeryUsefulService.thisDemo();
     }
 
@@ -74,7 +93,7 @@ class NotVeryUsefulServiceTest {
 //    ProxyFactory proxyFactory;
 
     @Test
-    public void testClassNames(){
+    public void testClassNames() {
         System.out.println("<============aopConfig类名称：" + aopConfig.getClass().getName());
         System.out.println("<============context类名称：" + context.getClass().getName());
         System.out.println("<============lifecycleProcessor类名称：" + lifecycleProcessor.getClass().getName());
@@ -85,8 +104,9 @@ class NotVeryUsefulServiceTest {
 //        System.out.println("<============proxyFactory类名称：" + proxyFactory.getClass().getName());
 
     }
+
     @Test
-    public void testAopProgramatically2(){
+    public void testAopProgramatically2() {
         System.out.println("<============jdk service ===================>");
         NotVeryUsefulService serviceObj = new NotVeryUsefulService();
         NotVeryUsefulAspect programaticAspect = new NotVeryUsefulAspect();
@@ -100,7 +120,7 @@ class NotVeryUsefulServiceTest {
         System.out.println("<============force cglib service===================>");
 
         proxyFactory.setProxyTargetClass(true);//是否需要使用CGLIB代理
-         proxy = proxyFactory.getProxy();
+        proxy = proxyFactory.getProxy();
         System.out.println(proxy.getClass().getName());
         proxy.thisDemo();
     }

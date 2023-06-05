@@ -17,7 +17,7 @@ public class NotVeryUsefulService extends CommonService2 implements NotVeryUsefu
         return "hello ";
     }
 
-    public String transfer(int count) {
+    public String transfer(Integer count) {
         if (count < 0) throw new IllegalArgumentException();
         log.info("<------------NotVeryUsefulService.transfer----------------------->");
         return "hello " + count;
@@ -29,6 +29,18 @@ public class NotVeryUsefulService extends CommonService2 implements NotVeryUsefu
 
     public void thisDemo() {
         log.info("<------------NotVeryUsefulService.thisDemo----------------------->");
+    }
+
+    @Override
+    public void transfer(PermissionService permissionService) {
+        log.info("<------------NotVeryUsefulService. transfer PermissionService----------------------->");
+
+    }
+
+    @Override
+    public void transfer(Object annotated) {
+        log.info("<------------NotVeryUsefulService. transfer Object----------------------->");
+
     }
 
 

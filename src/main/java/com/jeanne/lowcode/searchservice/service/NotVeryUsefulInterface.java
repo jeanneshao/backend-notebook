@@ -5,7 +5,11 @@ package com.jeanne.lowcode.searchservice.service;
  **/
 public interface NotVeryUsefulInterface {
     String transfer();
-    String transfer(int count);
+    String transfer(Integer count);
     void within();
     void thisDemo();
+
+    void transfer(PermissionService permissionService);
+
+    void transfer(Object annotated);
 }
