@@ -137,7 +137,13 @@ public class NotVeryUsefulAspect {
     public void beoforeWithinAnno() {
         log.info("<-----------------before---hasWithinAnno----------------------->");
     }
-
+    @Pointcut("anyOldTransfer() && @target(com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation)")
+    private void hasTargetAnno() {
+    }
+    @Before("hasTargetAnno()")
+    public void beoforeTargetAnno() {
+        log.info("<-----------------before---hasTargetAnno----------------------->");
+    }
 //    @Pointcut("this(com.jeanne.lowcode.searchservice.service.CommonService)")
 //    public void thisDemoPointcut3() {
 //    }
@@ -178,9 +184,7 @@ public class NotVeryUsefulAspect {
     private void hasAnnotation() {
     }
 
-    @Pointcut("@target(com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation)")
-    private void runtimeAnnotation() {
-    }
+
 
 //    @Pointcut("target(com.jeanne.lowcode.searchservice.service.CommonService)")
 //    public void targetDemoPointcut3() {
@@ -197,24 +201,6 @@ public class NotVeryUsefulAspect {
 //    }
 
 
-    /**
-     * execution: For matching method execution join points. This is the primary pointcut designator to use when working with Spring AOP.
-     *
-     *
-     * args: Limits matching to join points (the execution of methods when using Spring AOP) where the arguments are instances of the given types.
-     *
-     * @target: Limits matching to join points (the execution of methods when using Spring AOP) where the class of the executing object has an annotation of the given type.
-     *
-     * @args: Limits matching to join points (the execution of methods when using Spring AOP) where the runtime type of the actual arguments passed have annotations of the given types.
-     *
-     * @within: Limits matching to join points within types that have the given annotation (the execution of methods declared in types with the given annotation when using Spring AOP).
-     *
-     * @annotation: Limits matching to join points where the subject of the join point (the method being run in Spring AOP) has the given annotation.
-     */
-
-    /**
-     * The full AspectJ pointcut language supports additional pointcut designators that are not supported in Spring: call, get, set, preinitialization, staticinitialization, initialization, handler, adviceexecution, withincode, cflow, cflowbelow, if, @this, and @withincode. Use of these pointcut designators in pointcut expressions interpreted by Spring AOP results in an IllegalArgumentException being thrown.
-     */
 
 
 }

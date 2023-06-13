@@ -1,5 +1,6 @@
 package com.jeanne.lowcode.searchservice.service;
 
+import com.jeanne.lowcode.searchservice.aspect.permission.PermissionAnnotation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 //public class NotVeryUsefulService {
 //public class NotVeryUsefulService extends CommonService implements NotVeryUsefulInterface {
+@PermissionAnnotation
 public class NotVeryUsefulService extends CommonService2 implements NotVeryUsefulInterface {
 
     public String transfer() {

@@ -51,6 +51,12 @@ class NotVeryUsefulServiceTest {
 //        notVeryUsefulService.transfer(permissionService);
         notVeryUsefulService.transfer(new Annotated());
     }
+    @Test
+    void testTargetWithinAnnot() {
+//        System.out.println("<============permissionService类名称：" + permissionService.getClass().getName());
+//        notVeryUsefulService.transfer(permissionService);
+        notVeryUsefulService.transfer();
+    }
 
     @PermissionAnnotation
     class Annotated{
