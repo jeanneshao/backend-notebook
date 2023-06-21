@@ -9,7 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import java.lang.reflect.Proxy;
 
 
-@SpringBootApplication(proxyBeanMethods = false)
+@SpringBootApplication()
 public class SearchServiceApplication {
 
     public static void main(String[] args) {
