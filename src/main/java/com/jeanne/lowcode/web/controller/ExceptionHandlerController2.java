@@ -2,7 +2,6 @@ package com.jeanne.lowcode.web.controller;
 
 import com.jeanne.lowcode.web.service.ExceptionStimulationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.codec.CodecException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,25 +14,10 @@ import java.io.IOException;
  * @author Jeanne 2023/6/23
  **/
 @Controller
-@RequestMapping("exception")
-public class ExceptionHandlerController {
+@RequestMapping("exception2")
+public class ExceptionHandlerController2 {
     @Autowired
     ExceptionStimulationService exceptionStimulationService;
-
-    @ExceptionHandler(/*{FileSystemException.class, RemoteException.class}*/)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Exception: " + ex.getMessage());
-    }
-
-    @ExceptionHandler(/*{FileSystemException.class, RemoteException.class}*/)
-    public ResponseEntity<String> handleIOException(IOException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("IOException: " + ex.getMessage());
-    }
-
-    @ExceptionHandler({FileNotFoundException.class})
-    public ResponseEntity<String> handleFileNotFoundException(IOException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("FileNotFoundException: " + ex.getMessage());
-    }
 
     @GetMapping("/nest/{type}")
     @ResponseBody
