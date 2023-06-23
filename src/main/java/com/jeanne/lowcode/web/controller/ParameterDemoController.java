@@ -1,15 +1,17 @@
 package com.jeanne.lowcode.web.controller;
 
 import com.jeanne.lowcode.web.vo.JsonBodyDemo;
-import com.jeanne.lowcode.web.vo.UserScheduleVo;
+import com.jeanne.lowcode.web.vo.ValidationVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.WebRequest;
@@ -24,9 +26,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.security.Principal;
 import java.time.ZoneId;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * @author Jeanne 2023/6/19
@@ -129,9 +129,9 @@ public class ParameterDemoController {
         return "lalala";
     }
 
-    @PostMapping("/validation/{ppp}")
+    @PostMapping("/validCustom/{ppp}")
     @ResponseBody
-    public String useValidtion(@Valid @RequestBody UserScheduleVo userScheduleVo,
+    public String useValidtion(@Valid @RequestBody ValidationVo validationVo,
                                Errors errors,
                                BindingResult bindingResult) {
 
@@ -139,23 +139,120 @@ public class ParameterDemoController {
         return bindingResult.toString();
     }
 
-    @GetMapping("/responsebody}")
+    @PostMapping("/validatedCustom/{ppp}")
+    @ResponseBody
+    public String useValidtionValidated(@Validated @RequestBody ValidationVo validationVo,
+                               Errors errors,
+                               BindingResult bindingResult) {
+
+        System.out.println(bindingResult);
+        return bindingResult.toString();
+    }
+
+    @PostMapping("/validDefault/{ppp}")
+    @ResponseBody
+    public String useValidtion(@Valid @RequestBody ValidationVo validationVo) {
+
+        return "";
+    }
+
+    @PostMapping("/validatedDefault/{ppp}")
+    @ResponseBody
+    public String useValidtionValidated(@Validated @RequestBody ValidationVo validationVo) {
+
+        return "";
+    }
+
+    @GetMapping("/responsebody")
     @ResponseBody
     public String responsebody() {
         return "222";
     }
     //HttpEntity<B>, ResponseEntity<B>
 
-    @GetMapping("/httpEntity}")
+    @GetMapping("/httpEntityOut")
     public HttpEntity httpEntity() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("MyResponseHeader", "MyValue");//设置头信息
         return new HttpEntity<String>("Helloworld", responseHeaders);
     }
 
-    @GetMapping("/responseEntity}")
+    @GetMapping("/responseEntity")
     public ResponseEntity responseEntity() {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserScheduleVo());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ValidationVo());
+    }
+
+    @GetMapping("/reponseMap")
+//    @ResponseBody
+    public Map returnMap() {
+        HashMap<String, String> stringStringHashMap = new HashMap<>();
+        stringStringHashMap.put("name", "lll2222");
+        return stringStringHashMap;
+    }
+
+
+    @GetMapping("/reponseHeaders")
+//    @ResponseBody
+    public HttpHeaders returnHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.put("hello", Arrays.asList("world"));
+        return httpHeaders;
+    }
+
+    // GET /pets/42;q=11;r=22
+    @GetMapping("/pets/{petId}")
+    public void findPet(@PathVariable String petId, @MatrixVariable String q, @MatrixVariable int r) {
+        // petId == 42
+        // q == 11
+        System.out.println(q);
+    }
+
+    // GET /owners/42;q=11/pets/21;q=22
+    @GetMapping("/owners/{ownerId}/pets/{petId}")
+    public void findPet(
+            @MatrixVariable(name = "q", pathVar = "ownerId") int q1,
+            @MatrixVariable(name = "q", pathVar = "petId") int q2) {
+        System.out.println(q1);
+
+// q1 == 11
+// q2 == 22
+    }
+
+    // GET /owners/42;q=11;r=12/petsMultiValueMap/21;q=22;s=23
+    @GetMapping("/owners/{ownerId}/petsMultiValueMap/{petId}")
+    public void findPetMultiValueMap(
+            @MatrixVariable MultiValueMap<String, String> matrixVars,
+            @MatrixVariable(pathVar = "petId") MultiValueMap<String, String> petMatrixVars) {
+        System.out.println(petMatrixVars);
+        // matrixVars: ["q" : [11,22], "r" : 12, "s" : 23]
+        // petMatrixVars: ["q" : 22, "s" : 23]
+    }
+
+    // GET /requestParams?p=3&p=5&q=weeee&q=dde
+    @PostMapping("/requestParams")
+    public void requestParam(
+            @RequestParam("p") int p,
+            @RequestParam("p") int[] ps,
+            @RequestParam("p") List pl,
+            @RequestParam Map<String, String> pm,
+            @RequestParam MultiValueMap<String, String> pmm) {
+        System.out.println(p);
+        // matrixVars: ["q" : [11,22], "r" : 12, "s" : 23]
+        // petMatrixVars: ["q" : 22, "s" : 23]
+    }
+
+    // GET /requestParams?p=3&p=5&q=weeee&q=dde
+    @PostMapping("/getHeaders")
+    public void getHeaders(
+            @RequestHeader("accept-encoding") List<String> acceptedEncoding,
+            @RequestHeader Map<String, String> headerMap
+            , @RequestHeader MultiValueMap<String, String> headerMultiMap
+
+            , @RequestHeader HttpHeaders headers
+    ) {
+        System.out.println("headers");
+        // matrixVars: ["q" : [11,22], "r" : 12, "s" : 23]
+        // petMatrixVars: ["q" : 22, "s" : 23]
     }
 
 

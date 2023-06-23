@@ -1,5 +1,6 @@
 package com.jeanne.lowcode.web.vo;
 
+import com.jeanne.lowcode.web.validations.small.Small;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -8,8 +9,10 @@ import javax.validation.constraints.*;
  * @author Jeanne 2023/6/21
  **/
 @Data
-public class UserScheduleVo  {
+public class ValidationVo {
 
+    @Small(30)
+    private long id;
 
     @NotBlank(message = "赛事不能为空")
     private String matchEventName; // 赛事名称
