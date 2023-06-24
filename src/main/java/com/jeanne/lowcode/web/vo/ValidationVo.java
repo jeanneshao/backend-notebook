@@ -11,6 +11,8 @@ import javax.validation.constraints.*;
 @Data
 public class ValidationVo {
 
+    private String defaultMessage;
+
     @Small(30)
     private long id;
 

@@ -9,5 +9,5 @@ import org.springframework.web.context.request.async.DeferredResult;
 @Data
 public class AyncDemoVo {
 
-    DeferredResult<String> deferredResult;
+    DeferredResult<String> deferredResult = new DeferredResult<>();
 }

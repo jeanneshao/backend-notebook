@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CORS Test</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const getRest = function (url) {
+        axios.get(url)
+            .then(function (response) {
+                console.log(url, response);
+            })
+            .catch(function (error) {
+                console.log(url, error);
+            })
+            .then(function () {
+            });
+    };
+    // getRest('http://localhost:8080/cors');
+    // getRest('http://localhost:8080/cors/allowAll');
+    // getRest('http://localhost:8080/cors/origins');
+    // getRest('http://localhost:8080/cors/origins2');
+    // getRest('http://localhost:8080/cors/originPatterns');
+    // getRest('http://localhost:8080/cors/originPatterns2');
+    getRest('http://localhost:8080/cors2');
+    getRest('http://localhost:8080/cors2/allow');
+
+
+</script>
+
+</body>
+</html>
