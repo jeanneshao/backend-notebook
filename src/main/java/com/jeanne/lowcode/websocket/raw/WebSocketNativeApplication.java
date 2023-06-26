@@ -1,4 +1,4 @@
-package com.jeanne.lowcode.websocket.ori;
+package com.jeanne.lowcode.websocket.raw;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

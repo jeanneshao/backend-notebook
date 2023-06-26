@@ -1,4 +1,4 @@
-package com.jeanne.lowcode.websocket.ori.handler;
+package com.jeanne.lowcode.websocket.raw.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeanne.lowcode.websocket.stomp.vo.DemoVo;

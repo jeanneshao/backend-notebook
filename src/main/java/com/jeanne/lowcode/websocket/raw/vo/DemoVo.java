@@ -1,4 +1,4 @@
-package com.jeanne.lowcode.websocket.ori.vo;
+package com.jeanne.lowcode.websocket.raw.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
