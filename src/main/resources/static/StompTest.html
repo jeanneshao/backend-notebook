@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<input type="text" id="name" placeholder="Enter your name">
+<button onclick="send()">Send</button>
+<ul id="greetings"></ul>
+<script>
+    let url = "http://localhost:8080/websocket3"
+    const socket = new SockJS(url)
+    const stompClient = Stomp.over(socket);
+    console.log('socket: ' + socket);
+    console.log('stompClient: ' + stompClient);
+
+    function connect() {
+        console.log('start connect: ' );
+        stompClient.connect({}, function(frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/t1/hello/websocket', function(greeting) {
+                var content = JSON.parse(greeting.body).content;
+                var li = document.createElement('li');
+                li.appendChild(document.createTextNode(content));
+                document.getElementById('greetings').appendChild(li);
+            });
+        });
+        console.log(' connectted ' );
+    }
+    function send() {
+        let name = document.getElementById('name').value;
+        if (name) {
+            stompClient.send('/t3/hello/websocket', {}, JSON.stringify({ 'name': name }));
+            document.getElementById('name').value = '';
+        }
+    }
+    connect();
+</script>
+</body>
+</html>
+
