@@ -8,9 +8,9 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @author Jeanne 2023/6/17
  **/
 @SpringBootApplication
-public class WebSocketDemoApplication {
+public class WebSocketStompApplication {
     public static void main(String[] args) {
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(WebSocketDemoApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(WebSocketStompApplication.class, args);
 
     }
 }

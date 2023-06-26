@@ -20,9 +20,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(new TextWebSocketDemoHandler(), "websocket2")
                 .addInterceptors(new HandshakeDemoIntercpetor())
-                .setAllowedOrigins("*")
-                .withSockJS()
-                .setHeartbeatTime(15000l);
+//                .setAllowedOrigins("*")
+                .setAllowedOrigins("http://localhost:63342");
     }
 
 
