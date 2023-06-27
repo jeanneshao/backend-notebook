@@ -2,6 +2,7 @@ package com.jeanne.lowcode.websocket.stomp.service;
 
 import com.jeanne.lowcode.websocket.stomp.vo.DemoVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 /**
@@ -16,7 +17,7 @@ public class WebSocketService {
      */
     private static final String TASK_STATE = "/queue/task/state";
 
-//    @Autowired
+    @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
     /**

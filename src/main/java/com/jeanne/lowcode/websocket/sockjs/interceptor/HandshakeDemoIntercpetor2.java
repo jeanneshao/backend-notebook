@@ -1,4 +1,4 @@
-package com.jeanne.lowcode.websocket.stomp.interceptor;
+package com.jeanne.lowcode.websocket.sockjs.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.ServletContextAware;

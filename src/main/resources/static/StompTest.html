@@ -2,41 +2,51 @@
 <html>
 <head>
     <title>WebSocket Example</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/webstomp-client@1.2.6/dist/webstomp.min.js"></script>
 </head>
 <body>
 <input type="text" id="name" placeholder="Enter your name">
-<button onclick="send()">Send</button>
-<ul id="greetings"></ul>
+<button onclick="send('/app/demo')">Send demo</button>
+<button onclick="send('/app/demo2')">Send demo2</button>
+<button onclick="send('/app/demo/3')">Send With ID</button>
+<button onclick="send('/app/see')">Send see</button>
+<button onclick="send('/app/sse')">Send sse</button>
+<button onclick="send('/app/s/ee')">Send s ee</button>
+<ul id="topic"></ul>
+<ul id="queue"></ul>
 <script>
     let url = "http://localhost:8080/websocket3"
     const socket = new SockJS(url)
-    const stompClient = Stomp.over(socket);
+    const stompClient = webstomp.over(socket);
     console.log('socket: ' + socket);
     console.log('stompClient: ' + stompClient);
 
-    function connect() {
-        console.log('start connect: ' );
-        stompClient.connect({}, function(frame) {
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/t1/hello/websocket', function(greeting) {
-                var content = JSON.parse(greeting.body).content;
-                var li = document.createElement('li');
-                li.appendChild(document.createTextNode(content));
-                document.getElementById('greetings').appendChild(li);
-            });
+    console.log('start connect: ');
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/demo', function (greeting) {
+            console.log("/topic/demo",greeting)
+            let obj = JSON.parse(greeting.body)
+            let content = greeting.body;
+            let li = document.createElement('li');
+            li.appendChild(document.createTextNode(content));
+            document.getElementById('topic').appendChild(li);
         });
-        console.log(' connectted ' );
-    }
-    function send() {
+    });
+    console.log(' connected ');
+
+    function send( topic ) {
         let name = document.getElementById('name').value;
         if (name) {
-            stompClient.send('/t3/hello/websocket', {}, JSON.stringify({ 'name': name }));
-            document.getElementById('name').value = '';
+            let obj = {"id":55,"name":name,"remarks":"nothing"}
+            console.log('about to send',obj)
+            // stompClient.send('/app/demo', "{\"id\":55,\"name\":\"lalala\",\"remarks\":\"nothing\"}", {} );
+            stompClient.send(topic, JSON.stringify(obj), {} );
+            // stompClient.send('/app/demo', {}, obj);
+            // document.getElementById('name').value = '';
         }
     }
-    connect();
 </script>
 </body>
 </html>

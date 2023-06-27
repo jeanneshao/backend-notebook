@@ -1,7 +1,7 @@
 package com.jeanne.lowcode.websocket.spring.config;
 
-import com.jeanne.lowcode.websocket.stomp.handler.TextWebSocketDemoHandler;
-import com.jeanne.lowcode.websocket.stomp.interceptor.HandshakeDemoIntercpetor;
+import com.jeanne.lowcode.websocket.spring.handler.TextWebSocketDemoHandler;
+import com.jeanne.lowcode.websocket.spring.interceptor.HandshakeDemoIntercpetor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -19,9 +19,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(new TextWebSocketDemoHandler(), "websocket2")
-                .addInterceptors(new HandshakeDemoIntercpetor())
-//                .setAllowedOrigins("*")
-                .setAllowedOrigins("http://localhost:63342");
+                .addInterceptors(new HandshakeDemoIntercpetor());
     }
 
 

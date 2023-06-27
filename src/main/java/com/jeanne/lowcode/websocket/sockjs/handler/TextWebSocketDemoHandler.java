@@ -1,4 +1,4 @@
-package com.jeanne.lowcode.websocket.stomp.handler;
+package com.jeanne.lowcode.websocket.sockjs.handler;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketMessage;
