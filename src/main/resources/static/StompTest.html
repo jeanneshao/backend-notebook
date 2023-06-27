@@ -7,13 +7,28 @@
 </head>
 <body>
 <input type="text" id="name" placeholder="Enter your name">
-<button onclick="send('/app/demo')">Send demo</button>
-<button onclick="send('/app/demo2')">Send demo2</button>
-<button onclick="send('/app/demo/3')">Send With ID</button>
-<button onclick="send('/app/see')">Send see</button>
-<button onclick="send('/app/sse')">Send sse</button>
-<button onclick="send('/app/s/ee')">Send s ee</button>
+<div>
+    <button onclick="send('/app','/demo')">Send demo</button>
+    <button onclick="send('/app','/demo2')">Send demo2</button>
+    <button onclick="send('/app','/demo/3')">Send With ID</button>
+    <button onclick="send('/app','/see')">Send see</button>
+    <button onclick="send('/app','/sse')">Send sse</button>
+    <button onclick="send('/app','/s/ee')">Send s ee</button>
+</div>
+<div>
+    <button onclick="send('/app/demo2','/')">Send demo</button>
+    <button onclick="send('/app/demo2','/2')">Send demo2</button>
+    <button onclick="send('/app/demo2','/3')">Send With ID</button>
+    <button onclick="send('/app/demo2','/see')">Send see</button>
+    <button onclick="send('/app/demo2','/sse')">Send sse</button>
+    <button onclick="send('/app/demo2','/s/ee')">Send s ee</button>
+    <button onclick="send('/app/demo2','/createError')">Stimulate Error</button>
+    <button onclick="send('/app/demo2','/error')">Stimulate Error</button>
+</div>
+
+
 <ul id="topic"></ul>
+<ul id="s2"></ul>
 <ul id="queue"></ul>
 <script>
     let url = "http://localhost:8080/websocket3"
@@ -25,29 +40,41 @@
     console.log('start connect: ');
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/demo', function (greeting) {
-            console.log("/topic/demo",greeting)
-            let obj = JSON.parse(greeting.body)
-            let content = greeting.body;
-            let li = document.createElement('li');
-            li.appendChild(document.createTextNode(content));
-            document.getElementById('topic').appendChild(li);
-        });
+        subscribe('/topic/demo', 'topic')
+        subscribe('/topic/s2', 's2')
     });
     console.log(' connected ');
 
-    function send( topic ) {
+    function send( prefix, topic ) {
         let name = document.getElementById('name').value;
         if (name) {
             let obj = {"id":55,"name":name,"remarks":"nothing"}
             console.log('about to send',obj)
             // stompClient.send('/app/demo', "{\"id\":55,\"name\":\"lalala\",\"remarks\":\"nothing\"}", {} );
-            stompClient.send(topic, JSON.stringify(obj), {} );
+            stompClient.send(prefix + topic, JSON.stringify(obj), {} );
             // stompClient.send('/app/demo', {}, obj);
             // document.getElementById('name').value = '';
         }
     }
+    function subscribe(topic, elementId){
+        stompClient.subscribe(topic, function (greeting) {
+            console.log(topic,greeting)
+            let obj = JSON.parse(greeting.body)
+            let content = greeting.body;
+            let li = document.createElement('li');
+            li.appendChild(document.createTextNode(content));
+            document.getElementById(elementId).appendChild(li);
+        });
+    }
 </script>
 </body>
+<style>
+    #topic {
+        background: aliceblue;
+    }
+    #s2 {
+        background: antiquewhite;
+    }
+</style>
 </html>
 
