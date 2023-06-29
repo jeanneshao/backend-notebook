@@ -41,7 +41,7 @@
     console.log('stompClient: ' + stompClient);
 
     console.log('start connect: ');
-    stompClient.connect({'authentication':'34fsae'}, function (frame) {
+    stompClient.connect({'authentication':'3333sae'}, function (frame) {
         // if(prefix.endsWith("2")){
         //     headers["x-authorization"] = "34fsae"
         // }
@@ -50,7 +50,7 @@
         subscribe('/user/topic/demo', 'user1')
         subscribe('/user/topic/position-updates', 'user2')
         subscribe('/topic/s2', 's2')
-        subscribe('/queue/demo', 'user1')
+        subscribe('/user/queue/demo', 'user1')
     });
     console.log(' connected ');
 

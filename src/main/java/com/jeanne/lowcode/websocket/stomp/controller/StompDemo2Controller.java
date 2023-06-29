@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class StompDemo2Controller {
     //    @Autowired
 //    WebSocketService webSocketService;
     @Autowired
-    SimpMessagingTemplate simpMessagingTemplate;
+    private SimpMessagingTemplate template;//名字的话是brokerMessagingTemplate
 
     //    @MessageMapping("/demo")
 //    @SendTo({"/topic", "/queue"})
@@ -52,6 +53,7 @@ public class StompDemo2Controller {
     }
 
     @MessageMapping("/{id}")
+    @SendToUser(value = {"/topic/demo"}, broadcast = false)
     public DemoVo demo3(@DestinationVariable("id") Long id,
                         Message message,
                         MessageHeaders messageHeaders,
@@ -64,6 +66,32 @@ public class StompDemo2Controller {
                         Principal principal,
                         DemoVo in) {
         System.out.println("2222demo3接收消息：" + in);
+        if (principal != null) {
+            in.setRemarks("user specific message for " + principal.getName());
+            this.template.convertAndSendToUser(principal.getName(), "/topic/position-updates", in);
+        }
+        in.setRemarks("2222demo3 handled " + in.getName());
+        return in;
+    }
+
+    @MessageMapping("/queue/{id}")
+    @SendTo(value = {"/queue/demo"})
+    public DemoVo queue(@DestinationVariable("id") Long id,
+                        Message message,
+                        MessageHeaders messageHeaders,
+                        MessageHeaderAccessor messageHeaderAccessor,
+                        SimpMessageHeaderAccessor simpMessageHeaderAccessor,
+                        StompHeaderAccessor stompHeaderAccessor,
+                        @Payload DemoVo paylod,
+                        @Header SimpMessageType simpMessageType,
+                        @Headers Map headerMap,
+                        Principal principal,
+                        DemoVo in) {
+        System.out.println("2222queue接收消息：" + in);
+        if (principal != null) {
+            in.setRemarks("user specific message for " + principal.getName());
+            this.template.convertAndSendToUser(principal.getName(), "/topic/position-updates", in);
+        }
         in.setRemarks("2222demo3 handled " + in.getName());
         return in;
     }
@@ -99,7 +127,8 @@ public class StompDemo2Controller {
     @MessageExceptionHandler
     @SendTo({"/topic/s2"})
     public DemoException handleException(Exception exception) {
-        DemoException demoException = DemoException.builder().message(exception.getMessage()).build();
+
+        DemoException demoException = DemoException.builder().message(exception.getMessage() + "\n" + exception.getStackTrace().toString()).build();
         return demoException;
     }
 }

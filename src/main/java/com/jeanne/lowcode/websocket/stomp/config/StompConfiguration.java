@@ -2,10 +2,14 @@ package com.jeanne.lowcode.websocket.stomp.config;
 
 import com.jeanne.lowcode.websocket.stomp.interceptor.ExecutorChannelDemoInterceptor;
 import com.jeanne.lowcode.websocket.stomp.interceptor.HandshakeDemoIntercpetor;
+import com.jeanne.lowcode.websocket.stomp.interceptor.PrincipalDemoInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.TaskScheduler;
@@ -22,6 +26,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 @Slf4j
+@Order(Ordered.HIGHEST_PRECEDENCE + 99)//优先级一定要比Spring-Security的高，才会用它来鉴权
 public class StompConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Override
@@ -46,12 +51,21 @@ public class StompConfiguration implements WebSocketMessageBrokerConfigurer {
         registry.enableSimpleBroker("/topic","/queue")
                 .setHeartbeatValue(new long[] {10000, 20000})
                 .setTaskScheduler(this.messageBrokerTaskScheduler);
+//        registry.setUserDestinationPrefix("/user");
+
     }
 
     public void configureClientInboundChannel(ChannelRegistration registration) {
         registration.interceptors(new ExecutorChannelDemoInterceptor());
+        registration.interceptors(new PrincipalDemoInterceptor());
     }
     public void configureClientOutboundChannel(ChannelRegistration registration) {
         registration.interceptors(new ExecutorChannelDemoInterceptor());
     }
+
+//    @Bean
+    public PrincipalDemoInterceptor createUserInterceptor() {
+        return new PrincipalDemoInterceptor();
+    }
+
 }
