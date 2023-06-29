@@ -1,0 +1,13 @@
+spring:
+  aop:
+    proxy-target-class: false
+    auto: false
+  servlet:
+    multipart:
+      max-file-size: 31457280
+  mvc:
+    async:
+      request-timeout: 3600000
+
+
+
