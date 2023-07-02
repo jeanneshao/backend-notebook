@@ -1,10 +1,10 @@
-package com.example.transaction;
+package com.example.transactionmybatisdemo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TransactionApplicationTests {
+class TransactionMybatisDemoApplicationTests {
 
     @Test
     void contextLoads() {

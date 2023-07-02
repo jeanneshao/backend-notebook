@@ -1,0 +1,20 @@
+spring:
+  data:
+    jpa:
+      repositories:
+        enabled: "true"
+  jpa:
+    show-sql: "true"
+    properties:
+      javax.persistence.query.timeout: "${JAVAX_PERSISTENCE_QUERY_TIMEOUT:30000}"
+    open-in-view: "false"
+    hibernate:
+      ddl-auto: update
+    database-platform: "${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.MySQL8Dialect}"
+  datasource:
+    driverClassName: "${SPRING_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}"
+    url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/base?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia%2FShanghai"
+    username: "${USER_NAME:notebook}"
+    password: "${DB_PWD:notebook}"
+#    hikari:
+#      maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
