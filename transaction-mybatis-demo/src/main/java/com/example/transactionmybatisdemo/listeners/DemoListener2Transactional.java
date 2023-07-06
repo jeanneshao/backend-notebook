@@ -14,7 +14,7 @@ import org.springframework.transaction.event.TransactionalApplicationListenerAda
  **/
 @Slf4j
 @Component
-public class DemoListener2Transactional extends TransactionalApplicationListenerAdapter<DemoEvent> implements ApplicationListener<DemoEvent> {
+public class DemoListener2Transactional extends TransactionalApplicationListenerAdapter<DemoEvent> implements TransactionalApplicationListener<DemoEvent> {
 
     
     /**
