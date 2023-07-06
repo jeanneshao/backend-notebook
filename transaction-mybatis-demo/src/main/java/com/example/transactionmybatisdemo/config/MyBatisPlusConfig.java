@@ -1,10 +1,11 @@
-package com.asiainfo.lowcode.config;
+package com.example.transactionmybatisdemo.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -15,7 +16,7 @@ import java.util.Date;
 /**
  * @author Jeanne 2023/5/13
  **/
-@EnableTransactionManagement
+@EnableTransactionManagement()
 @Configuration
 public class MyBatisPlusConfig implements MetaObjectHandler {
 

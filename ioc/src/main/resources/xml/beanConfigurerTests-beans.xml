@@ -4,7 +4,7 @@
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="configuredBean" class="com.jeanne.lowcode.searchservice.aspect.aspectj.ShouldBeConfiguredBySpring" lazy-init="true">
+	<bean id="configuredBean" class="com.jeanne.lowcode.aopdemo.aspect.aspectj.ShouldBeConfiguredBySpring" lazy-init="true">
 		<property name="name" value="Rod"/>
 	</bean>
 

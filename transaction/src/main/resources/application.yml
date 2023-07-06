@@ -18,3 +18,5 @@ spring:
     password: "${DB_PWD:notebook}"
 #    hikari:
 #      maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
+server:
+  port: 33002
