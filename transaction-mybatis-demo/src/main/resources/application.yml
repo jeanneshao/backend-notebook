@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    driverClassName: "${SPRING_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}"
+    url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/base?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia%2FShanghai"
+    username: "${USER_NAME:notebook}"
+    password: "${DB_PWD:notebook}"
+    hikari:
+      maximumPoolSize: "${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:16}"
+  main:
+    banner-mode: off
+  messages:
+    basename: i18n/messages
+    encoding: utf-8
+
+
+mybatis-plus:
+  type-aliases-package: com.example.transactionmybatisdemo.entity
+  type-enums-package: com.example.transactionmybatisdemo.entity.enums
+  mapper-locations: classpath:sqlmap/*.xml
+  global-config:
+    banner: false
+    db-config:
+      table-underline: true
+      column-underline: true
+    mapper-registry-cache:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+#    cache-enabled: true
+logging:
+  level:
+    root: info
+server:
+  port: 33001
+  tomcat:
+    accept-count: 50
+  shutdown: graceful
+  servlet:
+    context-path: /lowcode
+
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoTbUserRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoTbUser">
+        <!--@JPA.Support generated on 2023-07-06 21:12:18.-->
+        <!--@Table tb_user-->
+        <id column="id" jdbcType="BINARY" property="id"/>
+        <result column="created_time" jdbcType="BIGINT" property="createdTime"/>
+        <result column="additional_info" jdbcType="VARCHAR" property="additionalInfo"/>
+        <result column="authority" jdbcType="VARCHAR" property="authority"/>
+        <result column="customer_id" jdbcType="BINARY" property="customerId"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
+        <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
+        <result column="search_text" jdbcType="VARCHAR" property="searchText"/>
+        <result column="tenant_id" jdbcType="BINARY" property="tenantId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-06 21:12:18.-->
+        id, created_time, additional_info, authority, customer_id, email, first_name, last_name, search_text, tenant_id
+    </sql>
+</mapper>

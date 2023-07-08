@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoAssociationFullExampleToFileRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoAssociationFullExampleToFile">
+        <!--@JPA.Support generated on 2023-07-08 13:53:35.-->
+        <!--@Table association_full_example_to_file-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="entity_id" jdbcType="BIGINT" property="entityId"/>
+        <result column="file_id" jdbcType="BIGINT" property="fileId"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-08 13:53:35.-->
+        id, entity_id, file_id, deleted_flag
+    </sql>
+</mapper>

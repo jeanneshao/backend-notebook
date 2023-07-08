@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoUploadedFileRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoUploadedFile">
+        <!--@JPA.Support generated on 2023-07-08 13:54:02.-->
+        <!--@Table uploaded_file-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="storage_directory" jdbcType="VARCHAR" property="storageDirectory"/>
+        <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="file_suffix" jdbcType="VARCHAR" property="fileSuffix"/>
+        <result column="file_size" jdbcType="BIGINT" property="fileSize"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment"/>
+        <result column="deleted_flag" jdbcType="TINYINT" property="deletedFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-08 13:54:02.-->
+        id, storage_directory, file_name, file_suffix, file_size, `comment`, deleted_flag
+    </sql>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoRogWithBackendRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoRogWithBackend">
+        <!--@JPA.Support generated on 2023-07-08 13:53:58.-->
+        <!--@Table rog_with_backend-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="value" jdbcType="VARCHAR" property="value"/>
+        <result column="label" jdbcType="VARCHAR" property="label"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-08 13:53:58.-->
+        id, `value`, `label`
+    </sql>
+</mapper>

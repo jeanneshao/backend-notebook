@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoCustomerRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoCustomer">
+        <!--@JPA.Support generated on 2023-07-06 21:12:18.-->
+        <!--@Table customer-->
+        <id column="id" jdbcType="BINARY" property="id"/>
+        <result column="created_time" jdbcType="BIGINT" property="createdTime"/>
+        <result column="additional_info" jdbcType="VARCHAR" property="additionalInfo"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="address2" jdbcType="VARCHAR" property="address2"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="search_text" jdbcType="VARCHAR" property="searchText"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+        <result column="tenant_id" jdbcType="BINARY" property="tenantId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="zip" jdbcType="VARCHAR" property="zip"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-06 21:12:18.-->
+        id, created_time, additional_info, address, address2, city, country, email, phone, search_text, `state`,
+        tenant_id, title, zip
+    </sql>
+</mapper>

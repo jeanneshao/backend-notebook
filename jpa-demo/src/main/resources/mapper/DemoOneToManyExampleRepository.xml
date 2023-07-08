@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoOneToManyExampleRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoOneToManyExample">
+        <!--@JPA.Support generated on 2023-07-08 13:53:52.-->
+        <!--@Table one_to_many_example-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="time_example" jdbcType="TIME" property="timeExample"/>
+        <result column="time_second_example" jdbcType="TIME" property="timeSecondExample"/>
+        <result column="time_range_begin" jdbcType="TIME" property="timeRangeBegin"/>
+        <result column="time_range_end" jdbcType="TIME" property="timeRangeEnd"/>
+        <result column="month_range_begin" jdbcType="DATE" property="monthRangeBegin"/>
+        <result column="month_range_end" jdbcType="DATE" property="monthRangeEnd"/>
+        <result column="date_range_begin" jdbcType="DATE" property="dateRangeBegin"/>
+        <result column="date_range_end" jdbcType="DATE" property="dateRangeEnd"/>
+        <result column="datetime_range_begin" jdbcType="TIMESTAMP" property="datetimeRangeBegin"/>
+        <result column="datetime_range_end" jdbcType="TIMESTAMP" property="datetimeRangeEnd"/>
+        <result column="date_year_example" jdbcType="TIMESTAMP" property="dateYearExample"/>
+        <result column="date_month_example" jdbcType="TIMESTAMP" property="dateMonthExample"/>
+        <result column="date_example" jdbcType="TIMESTAMP" property="dateExample"/>
+        <result column="date_time_example" jdbcType="TIMESTAMP" property="dateTimeExample"/>
+        <result column="number_example" jdbcType="BIGINT" property="numberExample"/>
+        <result column="double_example" jdbcType="DECIMAL" property="doubleExample"/>
+        <result column="checkbox_option_group" jdbcType="VARCHAR" property="checkboxOptionGroup"/>
+        <result column="cog_with_enum_options" jdbcType="VARCHAR" property="cogWithEnumOptions"/>
+        <result column="cog_with_backend_options" jdbcType="VARCHAR" property="cogWithBackendOptions"/>
+        <result column="radio_option_group" jdbcType="VARCHAR" property="radioOptionGroup"/>
+        <result column="rog_with_enum_options" jdbcType="VARCHAR" property="rogWithEnumOptions"/>
+        <result column="rog_with_backend_options" jdbcType="VARCHAR" property="rogWithBackendOptions"/>
+        <result column="input_example" jdbcType="VARCHAR" property="inputExample"/>
+        <result column="email_example" jdbcType="VARCHAR" property="emailExample"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="select_with_fixed_options" jdbcType="VARCHAR" property="selectWithFixedOptions"/>
+        <result column="select_with_enum_options" jdbcType="VARCHAR" property="selectWithEnumOptions"/>
+        <result column="select_with_backend_options" jdbcType="VARCHAR" property="selectWithBackendOptions"/>
+        <result column="cascade_with_fixed_options" jdbcType="VARCHAR" property="cascadeWithFixedOptions"/>
+        <result column="cascade_with_backend_options" jdbcType="VARCHAR" property="cascadeWithBackendOptions"/>
+        <result column="cascade_with_enum_options" jdbcType="VARCHAR" property="cascadeWithEnumOptions"/>
+        <result column="cascadeMulti_with_fixed_options" jdbcType="VARCHAR" property="cascademultiWithFixedOptions"/>
+        <result column="cascadeMulti_with_backend_options" jdbcType="VARCHAR"
+                property="cascademultiWithBackendOptions"/>
+        <result column="cascadeMulti_with_enum_options" jdbcType="VARCHAR" property="cascademultiWithEnumOptions"/>
+        <result column="image_upload_example" jdbcType="VARCHAR" property="imageUploadExample"/>
+        <result column="file_upload_example" jdbcType="VARCHAR" property="fileUploadExample"/>
+        <result column="multi_file_example" jdbcType="VARCHAR" property="multiFileExample"/>
+        <result column="checkbox_example" jdbcType="TINYINT" property="checkboxExample"/>
+        <result column="text_area_example" jdbcType="LONGVARCHAR" property="textAreaExample"/>
+        <result column="full_example_id" jdbcType="BIGINT" property="fullExampleId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-08 13:53:52.-->
+        id, time_example, time_second_example, time_range_begin, time_range_end, month_range_begin, month_range_end,
+        date_range_begin, date_range_end, datetime_range_begin, datetime_range_end, date_year_example,
+        date_month_example, date_example, date_time_example, number_example, double_example, checkbox_option_group,
+        cog_with_enum_options, cog_with_backend_options, radio_option_group, rog_with_enum_options,
+        rog_with_backend_options, input_example, email_example, `name`, select_with_fixed_options,
+        select_with_enum_options, select_with_backend_options, cascade_with_fixed_options, cascade_with_backend_options,
+        cascade_with_enum_options, cascadeMulti_with_fixed_options, cascadeMulti_with_backend_options,
+        cascadeMulti_with_enum_options, image_upload_example, file_upload_example, multi_file_example, checkbox_example,
+        text_area_example, full_example_id
+    </sql>
+</mapper>

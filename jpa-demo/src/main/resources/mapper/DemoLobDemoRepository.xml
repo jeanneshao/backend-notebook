@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoLobDemoRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoLobDemo">
+        <!--@JPA.Support generated on 2023-07-08 21:43:12.-->
+        <!--@Table lob_demo-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="blob_demo" jdbcType="BLOB" property="blobDemo"/>
+        <result column="long_blob_demo" jdbcType="LONGVARBINARY" property="longBlobDemo"/>
+        <result column="long_text_demo" jdbcType="LONGVARCHAR" property="longTextDemo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-08 21:43:12.-->
+        id, blob_demo, long_blob_demo, long_text_demo
+    </sql>
+</mapper>

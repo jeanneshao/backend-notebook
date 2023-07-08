@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoAssociationFullExampleToManyRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoAssociationFullExampleToMany">
+        <!--@JPA.Support generated on 2023-07-08 13:53:38.-->
+        <!--@Table association_full_example_to_many-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="full_example_id" jdbcType="BIGINT" property="fullExampleId"/>
+        <result column="one_to_many_id" jdbcType="BIGINT" property="oneToManyId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-08 13:53:38.-->
+        id, full_example_id, one_to_many_id
+    </sql>
+</mapper>

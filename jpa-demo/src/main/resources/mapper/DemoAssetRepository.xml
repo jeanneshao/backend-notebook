@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jpademo.repository.DemoAssetRepository">
+    <resultMap id="BaseResultMap" type="com.example.jpademo.entity.DemoAsset">
+        <!--@JPA.Support generated on 2023-07-06 21:12:17.-->
+        <!--@Table asset-->
+        <id column="id" jdbcType="BINARY" property="id"/>
+        <result column="created_time" jdbcType="BIGINT" property="createdTime"/>
+        <result column="additional_info" jdbcType="VARCHAR" property="additionalInfo"/>
+        <result column="customer_id" jdbcType="BINARY" property="customerId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="label" jdbcType="VARCHAR" property="label"/>
+        <result column="search_text" jdbcType="VARCHAR" property="searchText"/>
+        <result column="tenant_id" jdbcType="BINARY" property="tenantId"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
+        <result column="upd_operator" jdbcType="VARCHAR" property="updOperator"/>
+        <result column="operator" jdbcType="VARCHAR" property="operator"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@JPA.Support generated on 2023-07-06 21:12:17.-->
+        id, created_time, additional_info, customer_id, `name`, `label`, search_text, tenant_id, `type`, update_time,
+        upd_operator, `operator`
+    </sql>
+</mapper>
