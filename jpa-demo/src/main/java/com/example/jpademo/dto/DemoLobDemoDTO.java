@@ -7,11 +7,9 @@ import lombok.Data;
 public class DemoLobDemoDTO {
     private Long id;
 
-    private [
-    B blobDemo;
+    private byte[] blobDemo;
 
-    private [
-    B longBlobDemo;
+    private byte[] longBlobDemo;
 
     private String longTextDemo;
 

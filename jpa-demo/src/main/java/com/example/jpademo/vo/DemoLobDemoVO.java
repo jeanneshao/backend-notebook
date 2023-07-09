@@ -10,11 +10,9 @@ public class DemoLobDemoVO {
     @NotNull(message = "id can not null")
     private Long id;
 
-    private [
-    B blobDemo;
+    private  byte[] blobDemo;
 
-    private [
-    B longBlobDemo;
+    private  byte[] longBlobDemo;
 
     private String longTextDemo;
 

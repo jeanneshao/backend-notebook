@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @Data
 @Entity
 @Accessors(chain = true)
-@Table(name = "low_code_demo.full_example")
+@Table(name = "full_example")
 public class DemoFullExample {
 
     /**
@@ -221,19 +221,19 @@ public class DemoFullExample {
     /**
      * 级联下拉框-多选-固定选项
      */
-    @Column(name = "cascadeMulti_with_fixed_options")
+    @Column(name = "cascade_multi_with_fixed_options")
     private String cascademultiWithFixedOptions;
 
     /**
      * 级联下拉框-多选-查枚举选项
      */
-    @Column(name = "cascadeMulti_with_backend_options")
+    @Column(name = "cascade_multi_with_backend_options")
     private String cascademultiWithBackendOptions;
 
     /**
      * 级联下拉框-多选-查接口选项
      */
-    @Column(name = "cascadeMulti_with_enum_options")
+    @Column(name = "cascade_multi_with_enum_options")
     private String cascademultiWithEnumOptions;
 
     /**
