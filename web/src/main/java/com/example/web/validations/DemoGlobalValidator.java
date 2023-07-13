@@ -3,6 +3,7 @@ package com.example.web.validations;
 import com.example.web.vo.ValidationVo;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -17,10 +18,7 @@ public class DemoGlobalValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ValidationVo validationVo = (ValidationVo) target;
-        if (validationVo.getDefaultMessage() == null
-                || !StringUtils.hasText(validationVo.getDefaultMessage() ) ) {
-            errors.rejectValue("defaultMessage", "defaultMessage.required", "defaultMessage is required.");
-        }
+        ValidationUtils.rejectIfEmpty(errors, "defaultMessage", "defaultMessage.required");
 
     }
 }

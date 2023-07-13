@@ -1,0 +1,26 @@
+spring:
+  aop:
+    proxy-target-class: false
+    auto: false
+  servlet:
+    multipart:
+      max-file-size: 31457280
+  mvc:
+    async:
+      request-timeout: 3600000
+  main:
+    lazy-initialization: true
+  application:
+    admin:
+      enabled: true #/actuator场景，单独使用没有效果
+  config:
+      import:
+        - "optional:classpath:happy2[.yml]"
+        - "optional:classpath:happy.yml"
+server:
+  port: 32009
+
+demo:
+  id: 222
+  description: not available
+

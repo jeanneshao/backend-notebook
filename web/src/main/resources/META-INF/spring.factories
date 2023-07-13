@@ -1,0 +1,13 @@
+# Logging Systems
+org.springframework.context.ApplicationListener=\
+com.example.web.listeners.ApplicationContextInitializedEventListener,\
+com.example.web.listeners.ApplicationEnvironmentPreparedEventListener,\
+com.example.web.listeners.ApplicationFailedEventListener,\
+com.example.web.listeners.ApplicationPreparedEventListener,\
+com.example.web.listeners.ApplicationReadyEventListener,\
+com.example.web.listeners.ApplicationStartedListener,\
+com.example.web.listeners.ApplicationStartingDemoListener,\
+com.example.web.listeners.AvailabilityChangeEventListener,\
+com.example.web.listeners.ContextRefreshedEventListener,\
+com.example.web.listeners.DemoFactoriesListener,\
+com.example.web.listeners.WebServerInitializedEventListener

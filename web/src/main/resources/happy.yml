@@ -1,0 +1,2 @@
+demo:
+  description: lalalalala\nhahahahaha, ${demo.name} is a Spring Boot application written by ${username:Unknown}
