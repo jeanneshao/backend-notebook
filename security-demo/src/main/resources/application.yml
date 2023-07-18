@@ -1,0 +1,7 @@
+server:
+  port: 32600
+spring:
+  security:
+    user:
+      name: demo
+      password: demo

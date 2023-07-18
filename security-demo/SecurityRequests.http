@@ -1,0 +1,30 @@
+### Demo
+GET http://localhost:32600/security
+Keep-Alive: timeout=2
+
+### skipAuth
+GET http://localhost:32600/skipAuth
+
+### get authentication
+GET http://localhost:32600/skipAuth/authentication
+
+### get authentication
+GET http://localhost:32600/skipAuth/test
+
+### Basic Authorization
+GET http://localhost:32600/security
+Authorization: Basic admin admin
+
+###
+POST http://localhost:32600/logout
+
+### hasRole
+GET http://localhost:32600/skipAuth/hasRole
+#role: ROLE_USER
+role: ROLE_ADMIN
+
+### hasAnyRole
+GET http://localhost:32600/skipAuth/hasAnyRole
+#role: ROLE_USER
+#role: ROLE_ADMIN
+role: ROLE_GUEST
