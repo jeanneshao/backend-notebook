@@ -18,7 +18,7 @@ spring:
         - "optional:classpath:happy2[.yml]"
         - "optional:classpath:happy.yml"
 server:
-  port: 32009
+  port: 32052
 
 demo:
   id: 222

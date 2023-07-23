@@ -1,0 +1,5 @@
+###
+GET http://localhost:32012/validation/demo1/
+
+###
+GET http://localhost:32012/validation/demo1/{{id}}

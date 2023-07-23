@@ -12,17 +12,17 @@
 <div id="app">
     <p>{{ $t("hello") }}</p>
     <p>{{ $t("hello {msg} world", {msg: 'Vue-I18N'}) }}</p>
-    <p>{{ $t('{1} {0} world', ['example',3]) }}</p>
-    <p>email: {{ $t('address', { account: 'foo', domain: 'domain.com' }) }}</p>
+    <p>{{ $t('{1} {0} world', ['example', 3]) }}</p>
+    <p>email: {{ $t('address', {account: 'foo', domain: 'domain.com'}) }}</p>
     <p>{{ $t('linked') }}</p>
 
     <label>{{ $t('homeAddress') }}</label>
     <p class="error">{{ $t('missingHomeAddress') }}</p>
 
     <p>{{ $t("custom_modifier")}}</p>
-    <p>Special Charaters are: {{ $t("special characters")}}</p>
+    <p>Special Characters are: {{ $t("special characters")}}</p>
 
-    <p>{{ $t("%{msg} world", { msg: 'hello' })}}</p>
+    <p>使用了ruby on rails语法: {{ $t("%{msg} world", {msg: 'hello'})}}</p>
 
     <p>{{ $t("br")}}</p>
     <p v-html="$t('br')"></p>
@@ -32,12 +32,12 @@
 
     <p>{{ $tc('apple', 0) }}</p>
     <p>{{ $tc('apple', 1) }}</p>
-    <p>{{ $tc('apple', 10, { count: 10 }) }}</p>
+    <p>{{ $tc('apple', 10, {count: 10}) }}</p>
 
-    <p>{{ $tc('banana', 1, { n: 1 }) }}</p>
-    <p>{{ $tc('banana', 1, { n: 'a single ' }) }}</p>
+    <p>{{ $tc('banana', 1, {n: 1}) }}</p>
+    <p>{{ $tc('banana', 1, {n: 'a single '}) }}</p>
     <p>{{ $tc('banana', 1) }}</p>
-    <p>{{ $tc('banana', 100, { n: 'too many' }) }}</p>
+    <p>{{ $tc('banana', 100, {n: 'too many'}) }}</p>
 
     <h2>Car:</h2>
     <p>{{ $tc('arabian car', 1) }}</p>
@@ -81,10 +81,10 @@
 
     <p>{{ $n(10000, 'currency') }}</p>
     <p>{{ $n(10000, 'currency', 'cn') }}</p>
-    <p>{{ $n(10000, 'currency', 'cn', { useGrouping: false }) }}</p>
-    <p>{{ $n(987654321, 'currency', { notation: 'compact' }) }}</p>
+    <p>{{ $n(10000, 'currency', 'cn', {useGrouping: false}) }}</p>
+    <p>{{ $n(987654321, 'currency', {notation: 'compact'}) }}</p>
     <p>{{ $n(0.99123, 'percent') }}</p>
-    <p>{{ $n(0.99123, 'percent', { minimumFractionDigits: 2 }) }}</p>
+    <p>{{ $n(0.99123, 'percent', {minimumFractionDigits: 2}) }}</p>
     <p>{{ $n(12.11612345, 'decimal') }}</p>
     <p>{{ $n(12145281111, 'decimal', 'cn') }}</p>
 
@@ -116,14 +116,1144 @@
     </i18n-n>
     <br/>
 
+    <h1>Error Demo</h1>
+    <template v-for="fieldError in fieldErrors2">
+        <div>{{ $t("fieldError", {propertyPath: fieldError.propertyPath, message: fieldError.message}) }}</div>
 
+    </template>
 
+    <h1>Request Body Error Demo</h1>
+    <template v-for="fieldError in fieldErrors">
+        <div>{{ $t("fieldError", {propertyPath: fieldError.propertyPath, message: fieldError.message}) }}</div>
 
+    </template>
+    <h1>Exception</h1>
+    <div>{{exception.message}}</div>
+    <h1>Exception</h1>
+    <div>{{ $t(exception.message) }}</div>
 
 
 </div>
 
 <script>
+    const data = () => {
+        const fieldErrors = [
+            {
+                "propertyPath": "countryName",
+                "invalidValue": null,
+                "message": "国家名称不能为空"
+            },
+            {
+                "propertyPath": "cityName",
+                "invalidValue": null,
+                "message": "城市名称不能为空"
+            },
+            {
+                "propertyPath": "matchEventName",
+                "invalidValue": null,
+                "message": "赛事不能为空"
+            },
+            {
+                "propertyPath": "provinceName",
+                "invalidValue": null,
+                "message": "省份名称不能为空"
+            }
+        ]
+        const fieldErrors2 = [
+            {
+                "propertyPath": "demoDelete.id",
+                "invalidValue": 6666667,
+                "message": "个性化Small校验"
+            },
+            {
+                "propertyPath": "demoDelete.requestParam",
+                "invalidValue": "",
+                "message": "不能为空或者为NUll"
+            }
+        ]
+        const exception = {
+            "cause": {
+                "cause": null,
+                "stackTrace": [
+                    {
+                        "classLoaderName": null,
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "throwFileNotFoundException",
+                        "fileName": "ExceptionStimulationService.java",
+                        "lineNumber": 20,
+                        "className": "com.demo.i18n.service.ExceptionStimulationService",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": null,
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "nestException",
+                        "fileName": "ExceptionStimulationService.java",
+                        "lineNumber": 28,
+                        "className": "com.demo.i18n.service.ExceptionStimulationService",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": null,
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "stimulateNestException",
+                        "fileName": "ExceptionHandlerController2.java",
+                        "lineNumber": 26,
+                        "className": "com.demo.i18n.controller.ExceptionHandlerController2",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": null,
+                        "moduleName": "java.base",
+                        "moduleVersion": "11.0.10",
+                        "methodName": "invoke0",
+                        "fileName": "NativeMethodAccessorImpl.java",
+                        "lineNumber": -2,
+                        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+                        "nativeMethod": true
+                    },
+                    {
+                        "classLoaderName": null,
+                        "moduleName": "java.base",
+                        "moduleVersion": "11.0.10",
+                        "methodName": "invoke",
+                        "fileName": "NativeMethodAccessorImpl.java",
+                        "lineNumber": 62,
+                        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": null,
+                        "moduleName": "java.base",
+                        "moduleVersion": "11.0.10",
+                        "methodName": "invoke",
+                        "fileName": "DelegatingMethodAccessorImpl.java",
+                        "lineNumber": 43,
+                        "className": "jdk.internal.reflect.DelegatingMethodAccessorImpl",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": null,
+                        "moduleName": "java.base",
+                        "moduleVersion": "11.0.10",
+                        "methodName": "invoke",
+                        "fileName": "Method.java",
+                        "lineNumber": 566,
+                        "className": "java.lang.reflect.Method",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doInvoke",
+                        "fileName": "InvocableHandlerMethod.java",
+                        "lineNumber": 205,
+                        "className": "org.springframework.web.method.support.InvocableHandlerMethod",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invokeForRequest",
+                        "fileName": "InvocableHandlerMethod.java",
+                        "lineNumber": 150,
+                        "className": "org.springframework.web.method.support.InvocableHandlerMethod",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invokeAndHandle",
+                        "fileName": "ServletInvocableHandlerMethod.java",
+                        "lineNumber": 117,
+                        "className": "org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invokeHandlerMethod",
+                        "fileName": "RequestMappingHandlerAdapter.java",
+                        "lineNumber": 895,
+                        "className": "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "handleInternal",
+                        "fileName": "RequestMappingHandlerAdapter.java",
+                        "lineNumber": 808,
+                        "className": "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "handle",
+                        "fileName": "AbstractHandlerMethodAdapter.java",
+                        "lineNumber": 87,
+                        "className": "org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doDispatch",
+                        "fileName": "DispatcherServlet.java",
+                        "lineNumber": 1067,
+                        "className": "org.springframework.web.servlet.DispatcherServlet",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doService",
+                        "fileName": "DispatcherServlet.java",
+                        "lineNumber": 963,
+                        "className": "org.springframework.web.servlet.DispatcherServlet",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "processRequest",
+                        "fileName": "FrameworkServlet.java",
+                        "lineNumber": 1006,
+                        "className": "org.springframework.web.servlet.FrameworkServlet",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doGet",
+                        "fileName": "FrameworkServlet.java",
+                        "lineNumber": 898,
+                        "className": "org.springframework.web.servlet.FrameworkServlet",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "service",
+                        "fileName": "HttpServlet.java",
+                        "lineNumber": 655,
+                        "className": "javax.servlet.http.HttpServlet",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "service",
+                        "fileName": "FrameworkServlet.java",
+                        "lineNumber": 883,
+                        "className": "org.springframework.web.servlet.FrameworkServlet",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "service",
+                        "fileName": "HttpServlet.java",
+                        "lineNumber": 764,
+                        "className": "javax.servlet.http.HttpServlet",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "internalDoFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 227,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 162,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "WsFilter.java",
+                        "lineNumber": 53,
+                        "className": "org.apache.tomcat.websocket.server.WsFilter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "internalDoFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 189,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 162,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilterInternal",
+                        "fileName": "RequestContextFilter.java",
+                        "lineNumber": 100,
+                        "className": "org.springframework.web.filter.RequestContextFilter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "OncePerRequestFilter.java",
+                        "lineNumber": 117,
+                        "className": "org.springframework.web.filter.OncePerRequestFilter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "internalDoFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 189,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 162,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilterInternal",
+                        "fileName": "FormContentFilter.java",
+                        "lineNumber": 93,
+                        "className": "org.springframework.web.filter.FormContentFilter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "OncePerRequestFilter.java",
+                        "lineNumber": 117,
+                        "className": "org.springframework.web.filter.OncePerRequestFilter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "internalDoFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 189,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 162,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilterInternal",
+                        "fileName": "CharacterEncodingFilter.java",
+                        "lineNumber": 201,
+                        "className": "org.springframework.web.filter.CharacterEncodingFilter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "OncePerRequestFilter.java",
+                        "lineNumber": 117,
+                        "className": "org.springframework.web.filter.OncePerRequestFilter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "internalDoFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 189,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doFilter",
+                        "fileName": "ApplicationFilterChain.java",
+                        "lineNumber": 162,
+                        "className": "org.apache.catalina.core.ApplicationFilterChain",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invoke",
+                        "fileName": "StandardWrapperValve.java",
+                        "lineNumber": 197,
+                        "className": "org.apache.catalina.core.StandardWrapperValve",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invoke",
+                        "fileName": "StandardContextValve.java",
+                        "lineNumber": 97,
+                        "className": "org.apache.catalina.core.StandardContextValve",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invoke",
+                        "fileName": "AuthenticatorBase.java",
+                        "lineNumber": 541,
+                        "className": "org.apache.catalina.authenticator.AuthenticatorBase",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invoke",
+                        "fileName": "StandardHostValve.java",
+                        "lineNumber": 135,
+                        "className": "org.apache.catalina.core.StandardHostValve",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invoke",
+                        "fileName": "ErrorReportValve.java",
+                        "lineNumber": 92,
+                        "className": "org.apache.catalina.valves.ErrorReportValve",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "invoke",
+                        "fileName": "StandardEngineValve.java",
+                        "lineNumber": 78,
+                        "className": "org.apache.catalina.core.StandardEngineValve",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "service",
+                        "fileName": "CoyoteAdapter.java",
+                        "lineNumber": 360,
+                        "className": "org.apache.catalina.connector.CoyoteAdapter",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "service",
+                        "fileName": "Http11Processor.java",
+                        "lineNumber": 399,
+                        "className": "org.apache.coyote.http11.Http11Processor",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "process",
+                        "fileName": "AbstractProcessorLight.java",
+                        "lineNumber": 65,
+                        "className": "org.apache.coyote.AbstractProcessorLight",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "process",
+                        "fileName": "AbstractProtocol.java",
+                        "lineNumber": 889,
+                        "className": "org.apache.coyote.AbstractProtocol$ConnectionHandler",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "doRun",
+                        "fileName": "NioEndpoint.java",
+                        "lineNumber": 1743,
+                        "className": "org.apache.tomcat.util.net.NioEndpoint$SocketProcessor",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "run",
+                        "fileName": "SocketProcessorBase.java",
+                        "lineNumber": 49,
+                        "className": "org.apache.tomcat.util.net.SocketProcessorBase",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "runWorker",
+                        "fileName": "ThreadPoolExecutor.java",
+                        "lineNumber": 1191,
+                        "className": "org.apache.tomcat.util.threads.ThreadPoolExecutor",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "run",
+                        "fileName": "ThreadPoolExecutor.java",
+                        "lineNumber": 659,
+                        "className": "org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": "app",
+                        "moduleName": null,
+                        "moduleVersion": null,
+                        "methodName": "run",
+                        "fileName": "TaskThread.java",
+                        "lineNumber": 61,
+                        "className": "org.apache.tomcat.util.threads.TaskThread$WrappingRunnable",
+                        "nativeMethod": false
+                    },
+                    {
+                        "classLoaderName": null,
+                        "moduleName": "java.base",
+                        "moduleVersion": "11.0.10",
+                        "methodName": "run",
+                        "fileName": "Thread.java",
+                        "lineNumber": 834,
+                        "className": "java.lang.Thread",
+                        "nativeMethod": false
+                    }
+                ],
+                "message": "Stimulated FileNotFoundException",
+                "suppressed": [],
+                "localizedMessage": "Stimulated FileNotFoundException"
+            },
+            "stackTrace": [
+                {
+                    "classLoaderName": null,
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "nestException",
+                    "fileName": "ExceptionStimulationService.java",
+                    "lineNumber": 31,
+                    "className": "com.demo.i18n.service.ExceptionStimulationService",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": null,
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "stimulateNestException",
+                    "fileName": "ExceptionHandlerController2.java",
+                    "lineNumber": 26,
+                    "className": "com.demo.i18n.controller.ExceptionHandlerController2",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": null,
+                    "moduleName": "java.base",
+                    "moduleVersion": "11.0.10",
+                    "methodName": "invoke0",
+                    "fileName": "NativeMethodAccessorImpl.java",
+                    "lineNumber": -2,
+                    "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+                    "nativeMethod": true
+                },
+                {
+                    "classLoaderName": null,
+                    "moduleName": "java.base",
+                    "moduleVersion": "11.0.10",
+                    "methodName": "invoke",
+                    "fileName": "NativeMethodAccessorImpl.java",
+                    "lineNumber": 62,
+                    "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": null,
+                    "moduleName": "java.base",
+                    "moduleVersion": "11.0.10",
+                    "methodName": "invoke",
+                    "fileName": "DelegatingMethodAccessorImpl.java",
+                    "lineNumber": 43,
+                    "className": "jdk.internal.reflect.DelegatingMethodAccessorImpl",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": null,
+                    "moduleName": "java.base",
+                    "moduleVersion": "11.0.10",
+                    "methodName": "invoke",
+                    "fileName": "Method.java",
+                    "lineNumber": 566,
+                    "className": "java.lang.reflect.Method",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doInvoke",
+                    "fileName": "InvocableHandlerMethod.java",
+                    "lineNumber": 205,
+                    "className": "org.springframework.web.method.support.InvocableHandlerMethod",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invokeForRequest",
+                    "fileName": "InvocableHandlerMethod.java",
+                    "lineNumber": 150,
+                    "className": "org.springframework.web.method.support.InvocableHandlerMethod",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invokeAndHandle",
+                    "fileName": "ServletInvocableHandlerMethod.java",
+                    "lineNumber": 117,
+                    "className": "org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invokeHandlerMethod",
+                    "fileName": "RequestMappingHandlerAdapter.java",
+                    "lineNumber": 895,
+                    "className": "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "handleInternal",
+                    "fileName": "RequestMappingHandlerAdapter.java",
+                    "lineNumber": 808,
+                    "className": "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "handle",
+                    "fileName": "AbstractHandlerMethodAdapter.java",
+                    "lineNumber": 87,
+                    "className": "org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doDispatch",
+                    "fileName": "DispatcherServlet.java",
+                    "lineNumber": 1067,
+                    "className": "org.springframework.web.servlet.DispatcherServlet",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doService",
+                    "fileName": "DispatcherServlet.java",
+                    "lineNumber": 963,
+                    "className": "org.springframework.web.servlet.DispatcherServlet",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "processRequest",
+                    "fileName": "FrameworkServlet.java",
+                    "lineNumber": 1006,
+                    "className": "org.springframework.web.servlet.FrameworkServlet",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doGet",
+                    "fileName": "FrameworkServlet.java",
+                    "lineNumber": 898,
+                    "className": "org.springframework.web.servlet.FrameworkServlet",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "service",
+                    "fileName": "HttpServlet.java",
+                    "lineNumber": 655,
+                    "className": "javax.servlet.http.HttpServlet",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "service",
+                    "fileName": "FrameworkServlet.java",
+                    "lineNumber": 883,
+                    "className": "org.springframework.web.servlet.FrameworkServlet",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "service",
+                    "fileName": "HttpServlet.java",
+                    "lineNumber": 764,
+                    "className": "javax.servlet.http.HttpServlet",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "internalDoFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 227,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 162,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "WsFilter.java",
+                    "lineNumber": 53,
+                    "className": "org.apache.tomcat.websocket.server.WsFilter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "internalDoFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 189,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 162,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilterInternal",
+                    "fileName": "RequestContextFilter.java",
+                    "lineNumber": 100,
+                    "className": "org.springframework.web.filter.RequestContextFilter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "OncePerRequestFilter.java",
+                    "lineNumber": 117,
+                    "className": "org.springframework.web.filter.OncePerRequestFilter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "internalDoFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 189,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 162,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilterInternal",
+                    "fileName": "FormContentFilter.java",
+                    "lineNumber": 93,
+                    "className": "org.springframework.web.filter.FormContentFilter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "OncePerRequestFilter.java",
+                    "lineNumber": 117,
+                    "className": "org.springframework.web.filter.OncePerRequestFilter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "internalDoFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 189,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 162,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilterInternal",
+                    "fileName": "CharacterEncodingFilter.java",
+                    "lineNumber": 201,
+                    "className": "org.springframework.web.filter.CharacterEncodingFilter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "OncePerRequestFilter.java",
+                    "lineNumber": 117,
+                    "className": "org.springframework.web.filter.OncePerRequestFilter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "internalDoFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 189,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doFilter",
+                    "fileName": "ApplicationFilterChain.java",
+                    "lineNumber": 162,
+                    "className": "org.apache.catalina.core.ApplicationFilterChain",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invoke",
+                    "fileName": "StandardWrapperValve.java",
+                    "lineNumber": 197,
+                    "className": "org.apache.catalina.core.StandardWrapperValve",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invoke",
+                    "fileName": "StandardContextValve.java",
+                    "lineNumber": 97,
+                    "className": "org.apache.catalina.core.StandardContextValve",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invoke",
+                    "fileName": "AuthenticatorBase.java",
+                    "lineNumber": 541,
+                    "className": "org.apache.catalina.authenticator.AuthenticatorBase",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invoke",
+                    "fileName": "StandardHostValve.java",
+                    "lineNumber": 135,
+                    "className": "org.apache.catalina.core.StandardHostValve",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invoke",
+                    "fileName": "ErrorReportValve.java",
+                    "lineNumber": 92,
+                    "className": "org.apache.catalina.valves.ErrorReportValve",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "invoke",
+                    "fileName": "StandardEngineValve.java",
+                    "lineNumber": 78,
+                    "className": "org.apache.catalina.core.StandardEngineValve",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "service",
+                    "fileName": "CoyoteAdapter.java",
+                    "lineNumber": 360,
+                    "className": "org.apache.catalina.connector.CoyoteAdapter",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "service",
+                    "fileName": "Http11Processor.java",
+                    "lineNumber": 399,
+                    "className": "org.apache.coyote.http11.Http11Processor",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "process",
+                    "fileName": "AbstractProcessorLight.java",
+                    "lineNumber": 65,
+                    "className": "org.apache.coyote.AbstractProcessorLight",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "process",
+                    "fileName": "AbstractProtocol.java",
+                    "lineNumber": 889,
+                    "className": "org.apache.coyote.AbstractProtocol$ConnectionHandler",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "doRun",
+                    "fileName": "NioEndpoint.java",
+                    "lineNumber": 1743,
+                    "className": "org.apache.tomcat.util.net.NioEndpoint$SocketProcessor",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "run",
+                    "fileName": "SocketProcessorBase.java",
+                    "lineNumber": 49,
+                    "className": "org.apache.tomcat.util.net.SocketProcessorBase",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "runWorker",
+                    "fileName": "ThreadPoolExecutor.java",
+                    "lineNumber": 1191,
+                    "className": "org.apache.tomcat.util.threads.ThreadPoolExecutor",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "run",
+                    "fileName": "ThreadPoolExecutor.java",
+                    "lineNumber": 659,
+                    "className": "org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": "app",
+                    "moduleName": null,
+                    "moduleVersion": null,
+                    "methodName": "run",
+                    "fileName": "TaskThread.java",
+                    "lineNumber": 61,
+                    "className": "org.apache.tomcat.util.threads.TaskThread$WrappingRunnable",
+                    "nativeMethod": false
+                },
+                {
+                    "classLoaderName": null,
+                    "moduleName": "java.base",
+                    "moduleVersion": "11.0.10",
+                    "methodName": "run",
+                    "fileName": "Thread.java",
+                    "lineNumber": 834,
+                    "className": "java.lang.Thread",
+                    "nativeMethod": false
+                }
+            ],
+            "message": "nestException===>Stimulated FileNotFoundException",
+            "suppressed": [],
+            "localizedMessage": "nestException===>Stimulated FileNotFoundException"
+        }
+
+        return {
+            fieldErrors, fieldErrors2, exception
+        }
+    }
+
+    // 定义 vue3 的对象
+    const vue3Composition = {
+        setup() { // 传说中的setup
+            // 使用上面的定义的“类”，分散setup内部的代码
+            const {fieldErrors, fieldErrors2, exception} = data()
+
+            return { // 返回给模板，否则模板访问不到。这里返回的是对象。
+                fieldErrors, fieldErrors2, exception
+            }
+        }
+    }
+
     const datetimeFormats = {
         'cn': {
             short: {
@@ -168,6 +1298,7 @@
             }
         }
     }
+
     function customPluralizationRule(choice, choicesLength, orgRule) {
         if (choice === 0) {
             return 0
@@ -184,6 +1315,7 @@
 
         return choicesLength < 4 ? 2 : 3
     }
+
     // 1. Ready translated locale messages
     // The structure of the locale message is the hierarchical object structure with each locale as the top property
     const messages = {
@@ -224,13 +1356,10 @@
 
             car: 'car | cars',
             apple: 'no apples | one apple | {count} apples',
-            banana: 'no bananas | {n} banana | {n} bananas'
+            banana: 'no bananas | {n} banana | {n} bananas',
 
-
-
-
-
-
+            fieldError: '{propertyPath}字段错误: {message}',
+            'nestException===>Stimulated FileNotFoundException': '自定义错误'
         },
         ru: {
             'arabian car': '0 машин | {n} машина | {n} машины | {n} машин',
@@ -260,10 +1389,7 @@
 
 
     // 3. Create a vue root instance
-    const app = Vue.createApp({
-        // set something options
-        // ...
-    })
+    const app = Vue.createApp(vue3Composition)
 
     // 4. Install i18n instance to make the whole app i18n-aware
     app.use(i18n)

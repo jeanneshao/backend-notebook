@@ -1,6 +1,7 @@
 spring:
   messages:
     encoding: UTF-8
-    basename: messages,i18n
+    basename: messages
     useCodeAsDefaultMessage: true
-
+server:
+  port: 32050

@@ -14,15 +14,6 @@ class I18nApplicationTests {
     MessageSource messageSource;
 
     @Test
-    void testXmlResource(){
-        String name = "Test I18N";
-        Object[] args1 = new Object[]{name};
-        String sss = messageSource.getMessage("greeting", args1, Locale.CHINA);
-        System.out.println("testXmlResource===>" + sss);//At 下午4:52:04 on 2023年4月9日, there was a disturbance in the Force on planet 7.
-
-    }
-
-    @Test
     void testPropertiesResource(){
         int planet = 7;
         String event = "a disturbance in the Force";
