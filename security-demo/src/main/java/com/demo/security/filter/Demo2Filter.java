@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.*;
@@ -51,6 +52,7 @@ public class Demo2Filter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Demo2Filter::doFilter");
         String role = request.getHeader("role");
+        role = StringUtils.hasText(role)? role : "ROLE_GUEST";
         // Filter logic
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 

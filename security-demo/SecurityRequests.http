@@ -20,11 +20,136 @@ POST http://localhost:32600/logout
 
 ### hasRole
 GET http://localhost:32600/skipAuth/hasRole
-#role: ROLE_USER
-role: ROLE_ADMIN
+role: ROLE_USER
+#role: ROLE_ADMIN
 
 ### hasAnyRole
 GET http://localhost:32600/skipAuth/hasAnyRole
-#role: ROLE_USER
+#Authorization: Basic admin admin
+role: ROLE_USER
 #role: ROLE_ADMIN
-role: ROLE_GUEST
+#role: ROLE_GUEST
+
+### hasPermission
+GET http://localhost:32600/skipAuth/hasPermission
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Authorization: Basic user1 user1
+role: DemoVO
+
+{
+  "id": 999,
+  "name": "hellllo"
+}
+
+### hasAnyRole
+GET http://localhost:32600/skipAuth/hasPermission2
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Authorization: Basic user1 user1
+role: DemoVO
+
+{
+  "id": 999,
+  "name": "hellllo"
+}
+### hasAnyRole
+GET http://localhost:32600/skipAuth/hasPermission3
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Authorization: Basic user1 user1
+role: DemoVO
+
+{
+  "id": 999,
+  "name": "ROLE_USER",
+  "authority": 1
+}
+### postFilter
+GET http://localhost:32600/skipAuth/postFilter
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Authorization: Basic user1 user1
+role: DemoVO
+
+{
+  "id": 999,
+  "name": "ROLE_USER",
+  "authority": 1
+}
+### hasAnyRole
+GET http://localhost:32600/skipAuth/hasPermission6
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Authorization: Basic user1 user1
+role: DemoVO
+
+{
+  "id": 999,
+  "name": "hellllo"
+}
+
+### hasAnyRole
+GET http://localhost:32600/skipAuth/hasPermission6
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Authorization: Basic user1 user1
+role: DemoVO
+
+{
+  "id": 999,
+  "name": "hellllo"
+}
+
+### hasAnyRole
+GET http://localhost:32600/skipAuth/hasPermission4
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Authorization: Basic user1 user1
+role: DemoVO
+
+{
+  "id": 999,
+  "name": "content"
+}
+
+###
+OPTIONS http://localhost:32600/skipAuth/hasPermission4
+
+
+> {% client.global.set("_csrf", response); %}
+###
+POST http://localhost:32600/skipAuth/hasPermission4
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+Connection: keep-alive
+Content-Type: application/json
+#Host: localhost:32600
+Origin: http://localhost:32600
+X-CSRF-TOKEN: {{_csrf}}
+#Referer: localhost:32600
+
+{
+  "id": 999,
+  "name": "content"
+}
+
+
+###
+GET http://localhost:32600/method/find
+Content-Type: application/json
+Accept: application/json, text/plain, */*
+#Authorization: Basic user1 user1
+#role: ROLE_READ
+
+{
+  "id": 999,
+  "name": "hellllo"
+}
+
+###
+GET http://localhost:32600/method/rulesAllowed
+Authorization: Basic user1 user1
+role: ROLE_ADMIN

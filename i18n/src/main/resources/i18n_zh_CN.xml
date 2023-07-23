@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="拿第1个参数" label="拿第1个参数{0}"/>
+    <entry key="greeting" label="Greeting">Hello, {0}!</entry>
+    <entry key="farewell" label="Farewell">Goodbye, {0}!</entry>
+</properties>

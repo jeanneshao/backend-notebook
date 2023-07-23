@@ -1,0 +1,6 @@
+spring:
+  messages:
+    encoding: UTF-8
+    basename: messages,i18n
+    useCodeAsDefaultMessage: true
+

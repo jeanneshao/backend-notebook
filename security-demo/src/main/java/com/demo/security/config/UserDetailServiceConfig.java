@@ -2,6 +2,7 @@ package com.demo.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import java.util.Arrays;
 
 /**
  * @author Jeanne 2023/7/17
@@ -27,6 +30,9 @@ public class UserDetailServiceConfig {
 //                .password( encoder.encode("user"))
                 .password( "{noop}user1")
                 .roles("USER")
+                .authorities(Arrays.asList(
+                        new SimpleGrantedAuthority("READ")
+                ))
                 .build();
         UserDetails admin = userBuilder
                 .username("admin")

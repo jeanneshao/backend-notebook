@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-I18N Demo</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/vue@3"></script>
+<script src="https://unpkg.com/vue-i18n@9"></script>
+
+<div id="app">
+    <p>{{ $t("hello") }}</p>
+    <p>{{ $t("hello {msg} world", {msg: 'Vue-I18N'}) }}</p>
+    <p>{{ $t('{1} {0} world', ['example',3]) }}</p>
+    <p>email: {{ $t('address', { account: 'foo', domain: 'domain.com' }) }}</p>
+    <p>{{ $t('linked') }}</p>
+
+    <label>{{ $t('homeAddress') }}</label>
+    <p class="error">{{ $t('missingHomeAddress') }}</p>
+
+    <p>{{ $t("custom_modifier")}}</p>
+    <p>Special Charaters are: {{ $t("special characters")}}</p>
+
+    <p>{{ $t("%{msg} world", { msg: 'hello' })}}</p>
+
+    <p>{{ $t("br")}}</p>
+    <p v-html="$t('br')"></p>
+
+    <p>{{ $tc('car', 1) }}</p>
+    <p>{{ $tc('car', 2) }}</p>
+
+    <p>{{ $tc('apple', 0) }}</p>
+    <p>{{ $tc('apple', 1) }}</p>
+    <p>{{ $tc('apple', 10, { count: 10 }) }}</p>
+
+    <p>{{ $tc('banana', 1, { n: 1 }) }}</p>
+    <p>{{ $tc('banana', 1, { n: 'a single ' }) }}</p>
+    <p>{{ $tc('banana', 1) }}</p>
+    <p>{{ $tc('banana', 100, { n: 'too many' }) }}</p>
+
+    <h2>Car:</h2>
+    <p>{{ $tc('arabian car', 1) }}</p>
+    <p>{{ $tc('arabian car', 2) }}</p>
+    <p>{{ $tc('arabian car', 4) }}</p>
+    <p>{{ $tc('arabian car', 12) }}</p>
+    <p>{{ $tc('arabian car', 21) }}</p>
+
+    <h2>Banana:</h2>
+    <p>{{ $tc('russian banana', 0) }}</p>
+    <p>{{ $tc('russian banana', 4) }}</p>
+    <p>{{ $tc('russian banana', 11) }}</p>
+    <p>{{ $tc('russian banana', 31) }}</p>
+
+    <h2>Date:</h2>
+    <p>{{ $d(new Date(), 'short', 'cn') }}</p>
+    <p>{{ $d(new Date(), 'long', 'cn') }}</p>
+    <p>{{ $d(new Date(), 'short', 'en') }}</p>
+    <p>{{ $d(new Date(), 'long', 'ru') }}</p>
+
+    <i18n-d tag="p" :value="new Date()"></i18n-d>
+    <i18n-d tag="p" :value="new Date()" format="long"></i18n-d>
+    <i18n-d tag="p" :value="new Date()" format="long" locale="ja-JP-u-ca-japanese"></i18n-d>
+
+
+    <i18n-d tag="span" :value="new Date()" locale="cn" :format="{ key: 'long', era: 'narrow' }">
+        <template #era="props">
+            <span style="color: green">{{ props.era }}</span>
+        </template>
+    </i18n-d>
+
+    <br/>
+    <i18n-d tag="span" :value="new Date()" locale="cn" :format="{ key: 'long', era: 'narrow' }">
+        <template #era="props">
+            <span style="color: green">{{ props.era }}</span>
+        </template>
+        <template #literal="props">
+            <span style="color: green">{{ props.literal }}</span>
+        </template>
+    </i18n-d>
+
+    <p>{{ $n(10000, 'currency') }}</p>
+    <p>{{ $n(10000, 'currency', 'cn') }}</p>
+    <p>{{ $n(10000, 'currency', 'cn', { useGrouping: false }) }}</p>
+    <p>{{ $n(987654321, 'currency', { notation: 'compact' }) }}</p>
+    <p>{{ $n(0.99123, 'percent') }}</p>
+    <p>{{ $n(0.99123, 'percent', { minimumFractionDigits: 2 }) }}</p>
+    <p>{{ $n(12.11612345, 'decimal') }}</p>
+    <p>{{ $n(12145281111, 'decimal', 'cn') }}</p>
+
+    <i18n-n tag="span" :value="100"></i18n-n>
+    <br/>
+    <i18n-n tag="span" :value="100" format="currency"></i18n-n>
+    <br/>
+    <i18n-n tag="span" :value="100" format="currency" locale="cn"></i18n-n>
+    <br/>
+    <i18n-n tag="span" :value="100" format="currency">
+        <template #integer="slotProps">
+            <span style="font-weight: bold;color: blueviolet">{{ slotProps.integer }}</span>
+        </template>
+    </i18n-n>
+    <br/>
+    <i18n-n tag="span" :value="1234" :format="{ key: 'currency', currency: 'EUR' }">
+        <template #currency="slotProps">
+            <span style="color: green">{{ slotProps.currency }}</span>
+        </template>
+        <template #integer="slotProps">
+            <span style="font-weight: bold;color: darkred">{{ slotProps.integer }}</span>
+        </template>
+        <template #group="slotProps">
+            <span style="font-weight: bold; color:darkmagenta">{{ slotProps.group }}</span>
+        </template>
+        <template #fraction="slotProps">
+            <span style="font-size: small;color: darkblue">{{ slotProps.fraction }}</span>
+        </template>
+    </i18n-n>
+    <br/>
+
+
+
+
+
+
+</div>
+
+<script>
+    const datetimeFormats = {
+        'cn': {
+            short: {
+                year: 'numeric', month: 'short', day: 'numeric'
+            },
+            long: {
+                year: 'numeric', month: 'short', day: 'numeric',
+                weekday: 'short', hour: 'numeric', minute: 'numeric'
+            }
+        },
+        'ru': {
+            short: {
+                year: 'numeric', month: 'short', day: 'numeric'
+            },
+            long: {
+                year: 'numeric', month: 'short', day: 'numeric',
+                weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: true
+            }
+        }
+    }
+    const numberFormats = {
+        'en': {
+            currency: {
+                style: 'currency', currency: 'USD', notation: 'standard'
+            },
+            decimal: {
+                style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2
+            },
+            percent: {
+                style: 'percent', useGrouping: false
+            }
+        },
+        'cn': {
+            currency: {
+                style: 'currency', currency: 'CNY', useGrouping: true, currencyDisplay: 'symbol'
+            },
+            decimal: {
+                style: 'decimal', minimumSignificantDigits: 3, maximumSignificantDigits: 5
+            },
+            percent: {
+                style: 'percent', useGrouping: false
+            }
+        }
+    }
+    function customPluralizationRule(choice, choicesLength, orgRule) {
+        if (choice === 0) {
+            return 0
+        }
+
+        const teen = choice > 10 && choice < 20
+        const endsWithOne = choice % 10 === 1
+        if (!teen && endsWithOne) {
+            return 1
+        }
+        if (!teen && choice % 10 >= 2 && choice % 10 <= 4) {
+            return 2
+        }
+
+        return choicesLength < 4 ? 2 : 3
+    }
+    // 1. Ready translated locale messages
+    // The structure of the locale message is the hierarchical object structure with each locale as the top property
+    const messages = {
+        en: {
+            hello: 'hello world',
+            'hello {msg} world': 'hello {msg} world',
+            '{1} {0} world': '{1} {0} world',
+            address: "{account}{'@'}{domain}",
+
+            the_world: 'the world',
+            dio: 'DIO:',
+            linked: '@:dio @:the_world !!!!',
+
+            homeAddress: 'Home address',
+            missingHomeAddress: 'Please provide @.lower:homeAddress'
+
+        },
+        cn: {
+            hello: '你好, 世界',
+            'hello {msg} world': '你好,{msg} 世界',
+            '{1} {0} world': '{1} {0} world',
+            address: "{account}{'@'}{domain}",
+
+            the_world: 'the world',
+            dio: 'DIO:',
+            linked: '@:dio @:the_world !!!!',
+
+            homeAddress: 'Home Address',
+            missingHomeAddress: 'Please provide @.lower:homeAddress',
+
+            snake: 'snake case',
+            custom_modifier: "custom modifiers example: @.snakeCase:{'snake'}",
+
+            "special characters": "{'{'},{'}'},{'@'},{'$'},{'|'}",
+            "%{msg} world": '%{msg} world',
+
+            br: 'hello <br> world',
+
+            car: 'car | cars',
+            apple: 'no apples | one apple | {count} apples',
+            banana: 'no bananas | {n} banana | {n} bananas'
+
+
+
+
+
+
+        },
+        ru: {
+            'arabian car': '0 машин | {n} машина | {n} машины | {n} машин',
+            'russian banana': 'нет бананов | {n} банан | {n} банана | {n} бананов'
+        }
+
+    }
+
+    // 2. Create i18n instance with options
+    const i18n = VueI18n.createI18n({
+        locale: 'cn', // set locale
+        fallbackLocale: 'ru', // set fallback locale
+        messages, // set locale messages
+        // set custom modifiers at `modifiers` option
+        // the custom rules here ...
+        pluralizationRules: {
+            ru: customPluralizationRule
+        },
+        modifiers: {
+            snakeCase: (str) => str.split(' ').join('_')
+        },
+        datetimeFormats: datetimeFormats,
+        numberFormats: numberFormats
+        // If you need to specify other options, you can set other options
+        // ...
+    })
+
+
+    // 3. Create a vue root instance
+    const app = Vue.createApp({
+        // set something options
+        // ...
+    })
+
+    // 4. Install i18n instance to make the whole app i18n-aware
+    app.use(i18n)
+
+    // 5. Mount
+    app.mount('#app')
+
+    // Now the app has started!
+</script>
+
+</body>
+</html>
