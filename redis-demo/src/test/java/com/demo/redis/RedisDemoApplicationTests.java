@@ -1,15 +1,17 @@
 package com.demo.redis;
 
+import com.demo.redis.pubsub.RedisPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
+import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 @Slf4j
@@ -19,6 +21,8 @@ class RedisDemoApplicationTests {
     RedisTemplate redisTemplate;
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    RedisPublisher redisPublisher;
 
     ValueOperations valueOperations;
 
@@ -29,78 +33,95 @@ class RedisDemoApplicationTests {
     }
 
     @Test
+    void testFlush() {
+        redisTemplate.execute((RedisCallback<Object>) connection -> {
+            connection.flushAll();
+            return null;
+        });
+
+    }
+
+    @Test
+    void testRedisTemplate(){
+        Boolean expireExecuted = stringRedisTemplate.expire("expiration-demo", 60*30l, TimeUnit.SECONDS);
+        log.info("expireExecuted=====>{}", expireExecuted);
+
+        Long expire = stringRedisTemplate.getExpire("expiration-demo");
+        log.info("<-=====expire=====>{}",  expire);
+    }
+
+    @Test
     void testOpsForValue() {
         valueOperations = stringRedisTemplate.opsForValue();
-//        // set study:1 study-1
-//        valueOperations.set("study:1", "study-1");
-//        log.info((String) valueOperations.get("study:1")); //study-1
-//        // SETRANGE study:1 study-1
-//        valueOperations.set("study:1", "study-1", 2l);
-//        log.info((String) valueOperations.get("study:1")); // ststudy-1
+        // set study:1 study-1
+        valueOperations.set("study:1", "study-1");
+        log.info((String) valueOperations.get("study:1")); //study-1
+        // SETRANGE study:1 study-1
+        valueOperations.set("study:1", "study-1", 2l);
+        log.info((String) valueOperations.get("study:1")); // ststudy-1
 
-//         // SETEX mykey 2 "Hello" // SET key value EX 2
-//        valueOperations.set("study:1", "study-1", 2l, TimeUnit.SECONDS);
-//        log.info((String) valueOperations.get("study:1")); //study-1
+         // SETEX mykey 2 "Hello" // SET key value EX 2
+        valueOperations.set("study:1", "study-1", 2l, TimeUnit.SECONDS);
+        log.info((String) valueOperations.get("study:1")); //study-1
 
-//        // set study:1 study-1 nx
-//        // setnx total-crashes 99
-//        valueOperations.setIfAbsent("study:1", "study-2");
-//        log.info((String) valueOperations.get("study:1")); //study-1
+        // set study:1 study-1 nx
+        // setnx total-crashes 99
+        valueOperations.setIfAbsent("study:1", "study-2");
+        log.info((String) valueOperations.get("study:1")); //study-1
 
-//        // set study:1 study-1 xx
-//        valueOperations.setIfPresent("study:1", "study-3");
-//        log.info((String) valueOperations.get("study:1")); //study-3
+        // set study:1 study-1 xx
+        valueOperations.setIfPresent("study:1", "study-3");
+        log.info((String) valueOperations.get("study:1")); //study-3
 
-//        valueOperations.setIfPresent("study:2", "study-3");
-//        log.info((String) valueOperations.get("study:2")); //null
+        valueOperations.setIfPresent("study:2", "study-3");
+        log.info((String) valueOperations.get("study:2")); //null
 
-//        valueOperations.set("study-incre","0");
-//        log.info( (String) valueOperations.get("study-incre")); //0
-//        // incr study-incre
-//        valueOperations.increment("study-incre");
-//        log.info( (String) valueOperations.get("study-incre")); //1
-//        //        // incrby study-incre 2
-//        valueOperations.increment("study-incre",2l);
-//        log.info( (String) valueOperations.get("study-incre")); //3
-//        //        incrbyfloat total-crashes 2.3
-//        valueOperations.increment("study-incre",2.3);
-//        log.info( (String) valueOperations.get("study-incre")); //5.3
+        valueOperations.set("study-incre","0");
+        log.info( (String) valueOperations.get("study-incre")); //0
+        // incr study-incre
+        valueOperations.increment("study-incre");
+        log.info( (String) valueOperations.get("study-incre")); //1
+        //        // incrby study-incre 2
+        valueOperations.increment("study-incre",2l);
+        log.info( (String) valueOperations.get("study-incre")); //3
+        //        incrbyfloat total-crashes 2.3
+        valueOperations.increment("study-incre",2.3);
+        log.info( (String) valueOperations.get("study-incre")); //5.3
 
-//        valueOperations.set("study-decr", "0");
-//        // decr total-crashes
-//        valueOperations.decrement("study-decr");
-//        log.info((String) valueOperations.get("study-decr")); //4.3
-//        // decrby total-crashes 2
-//        valueOperations.decrement("study-decr", 2);
-//        log.info((String) valueOperations.get("study-decr")); //2.3
+        valueOperations.set("study-decr", "0");
+        // decr total-crashes
+        valueOperations.decrement("study-decr");
+        log.info((String) valueOperations.get("study-decr")); //4.3
+        // decrby total-crashes 2
+        valueOperations.decrement("study-decr", 2);
+        log.info((String) valueOperations.get("study-decr")); //2.3
 
-//        // mget study-decr study-incre study:1
-//        List multiGet = valueOperations.multiGet(Arrays.asList("study-decr", "study-incre", "study:1"));
-//       log.info(String.valueOf(multiGet)); //[-3, 5.3, study-3]
+        // mget study-decr study-incre study:1
+        List multiGet = valueOperations.multiGet(Arrays.asList("study-decr", "study-incre", "study:1"));
+       log.info(String.valueOf(multiGet)); //[-3, 5.3, study-3]
 
-//       // mset study-decr 99 study-incre 88 study:1 hello
-//        Map<String, ? extends Serializable> multiset = Map.of("study-decr", "99", "study-incre", "88", "study:1", "multiset");
-//        valueOperations.multiSet(multiset);
-//        List multiGet = valueOperations.multiGet(Arrays.asList("study-decr", "study-incre", "study:1"));
-//        log.info(String.valueOf(multiGet)); //[99, 88, multiset]
-//       // APPEND key value
-//        valueOperations.append("bike:2","from java");
-//        log.info((String) valueOperations.get("bike:2")); //2.3
+       // mset study-decr 99 study-incre 88 study:1 hello
+        Map<String, String> multiset = Map.of("study-decr", "99", "study-incre", "88", "study:1", "multiset");
+        valueOperations.multiSet(multiset);
+        List multiGet2 = valueOperations.multiGet(Arrays.asList("study-decr", "study-incre", "study:1"));
+        log.info(String.valueOf(multiGet2)); //[99, 88, multiset]
+       // APPEND key value
+        valueOperations.append("bike:2","from java");
+        log.info((String) valueOperations.get("bike:2")); //2.3
 
-//        valueOperations.append("bike:2","from java");
-//        log.info((String) valueOperations.get("bike:2")); //2.3
+        valueOperations.append("bike:2","from java");
+        log.info((String) valueOperations.get("bike:2")); //2.3
 
-//       // SETBIT key offset value
-//        valueOperations.setBit("bit-demo",0, true);
-//        log.info(String.valueOf(valueOperations.getBit("bit-demo",0))); //2.3
-//        log.info(String.valueOf(valueOperations.getBit("bit-demo",1))); //2.3
+       // SETBIT key offset value
+        valueOperations.setBit("bit-demo",0, true);
+        log.info(String.valueOf(valueOperations.getBit("bit-demo",0))); //2.3
+        log.info(String.valueOf(valueOperations.getBit("bit-demo",1))); //2.3
 
         BitFieldSubCommands.BitFieldGet command = BitFieldSubCommands.BitFieldGet.create(
                 BitFieldSubCommands.BitFieldType.unsigned(8), BitFieldSubCommands.Offset.offset(0)
         );
         BitFieldSubCommands bitFieldSubCommands = BitFieldSubCommands.create(command);
         valueOperations.bitField("bit-demo", bitFieldSubCommands);
-
     }
 
     @Test
@@ -294,6 +315,82 @@ class RedisDemoApplicationTests {
 
         List<Object> objects = opsForHash.multiGet("hash-demo", Arrays.asList("has1", "hash2", "hash999"));
         log.info("objects===>{}<======>", objects);
+
+    }
+
+    @Test
+    void testGeoOperations(){
+        GeoOperations<String, String> geoOps = stringRedisTemplate.opsForGeo();
+//        // Add a location
+//        geoOps.add("myGeoKey", new RedisGeoCommands.GeoLocation<>("New York", new Point(-73.935242, 40.730610)));
+//
+//        // Add multiple locations
+//        Map<String, Point> locationMap = new HashMap<>();
+//        locationMap.put("New York side", new Point(-0.127759, 51.507351));
+//        locationMap.put("London", new Point(-0.127758, 51.507351));
+//        locationMap.put("Tokyo", new Point(139.691706, 35.689487));
+//        geoOps.add("myGeoKey", locationMap);
+//        // Get the distance between two locations
+//        Distance distance = geoOps.distance("myGeoKey", "New York", "London", RedisGeoCommands.DistanceUnit.KILOMETERS);
+//      log.info("distance===>{}",distance);
+//        // Get the geohash of a location
+//        List<String> geohash = geoOps.hash("myGeoKey", "Tokyo");
+//        log.info("geohash===>{}",geohash);
+//        // Get the coordinates of a location
+//        List<Point>  coordinates = geoOps.position("myGeoKey", "New York");
+//        log.info("coordinates===>{}",coordinates);
+//        // Get the georadius around a location
+        RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs()
+                .includeDistance()
+                .includeCoordinates()
+                .limit(3);
+        GeoResults<RedisGeoCommands.GeoLocation<String>> geoResults = geoOps.radius("myGeoKey","New York", new Distance(50000, Metrics.KILOMETERS),args);
+        for (GeoResult<RedisGeoCommands.GeoLocation<String>> result : geoResults) {
+            RedisGeoCommands.GeoLocation<String> location = result.getContent();
+            String locationName = location.getName();
+            Point point = location.getPoint();
+            Double resultDistance = result.getDistance().getValue();
+            log.info("Location: " + locationName + ", Coordinates: " + point + ", Distance: " + resultDistance);
+        }
+    }
+
+    @Test
+    void testHyperLogOperations(){
+        HyperLogLogOperations<String, String> ops = stringRedisTemplate.opsForHyperLogLog();
+        Long added = ops.add("hyperloglog-demo", "2", "4", "5", "8", "99");
+        // Get the approximate cardinality of the HyperLogLog
+        Long cardinality = ops.size("hyperloglog-demo");
+        log.info("Approximate Cardinality: " + cardinality);
+    }
+
+    @Test
+    void testPubSub(){
+        redisPublisher.publishMessage("redis-channel-demo","hello redis");
+    }
+
+
+    @Autowired
+    StringRedisTemplate redisTemplate2;
+    @Test
+    void testNewTemplates(){
+        stringRedisTemplate.opsForValue().set("template1","ok");
+        redisTemplate2.opsForValue().set("template2","ok");
+    }
+
+    @Test
+    void testCluster(){
+        valueOperations = stringRedisTemplate.opsForValue();
+
+        valueOperations.set("cluster-demo2", System.currentTimeMillis() + "");
+        log.info("get cluster-demo2===>{}", valueOperations.get("cluster-demo2")); //study-1
+
+    }
+ @Test
+    void testSentinel(){
+        valueOperations = stringRedisTemplate.opsForValue();
+
+        valueOperations.set("sentinel-demo2", System.currentTimeMillis() + "");
+        log.info("get sentinel-demo2===>{}", valueOperations.get("sentinel-demo2")); //study-1
 
     }
 
