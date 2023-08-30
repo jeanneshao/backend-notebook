@@ -12,8 +12,5 @@ class WebApplicationTests {
     void contextLoads() {
     }
 
-    @Test
-    void contextLoads2() {
-    }
 
 }
