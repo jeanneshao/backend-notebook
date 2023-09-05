@@ -1,5 +1,9 @@
 package com.demo.thread;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.invoke.MethodHandles;
@@ -24,6 +28,8 @@ public class VarHandleDemo {
 
         }
     }
+
+
     public static class DemoVo {
         long id;
         String name;
