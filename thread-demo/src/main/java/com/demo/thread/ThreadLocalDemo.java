@@ -7,11 +7,19 @@ import com.demo.thread.vo.DemoVo;
  **/
 public class ThreadLocalDemo {
     public static void main(String[] args) {
-        DemoThread1 demoThread1 = new DemoThread1();
-        demoThread1.start();
-//        DemoThread1 demoThread2 = new DemoThread1();
-//        demoThread2.start();
+//        new DemoThread1().start();
+        new SimpleGetSet().start();
 
+    }
+
+    public static class SimpleGetSet extends Thread {
+        @Override
+        public void run() {
+            ThreadLocal<Object> demoVoLocal = new ThreadLocal<>();
+            DemoVo demoVo = DemoVo.builder().id(333l).name("test ThreadLocal").build();
+            demoVoLocal.set(demoVo);
+            demoVoLocal.get();
+        }
     }
 
     public static class DemoThread1 extends Thread {
