@@ -23,9 +23,9 @@ public class ReentrantLockDemo {
 //        System.out.println("====================non fair======================");
 //        test(false);
 
-        System.out.println("====================可中断======================");
-        interruptDemo(true);
-        System.out.println("====================不可中断======================");
+//        System.out.println("====================可中断======================");
+//        interruptDemo(true);
+//        System.out.println("====================不可中断======================");
         interruptDemo(false);
     }
 
@@ -40,6 +40,9 @@ public class ReentrantLockDemo {
         Thread.sleep(1000l);
 
         thread2.interrupt();
+        Thread.sleep(2000l);
+
+        shouldLock.compareAndSet(true, false);//要求释放锁
         Thread.sleep(2000l);
         shouldLock.compareAndSet(true, false);//要求释放锁
 
@@ -57,6 +60,7 @@ public class ReentrantLockDemo {
 
         static ReentrantLock lock = new ReentrantLock();
         boolean interruptibly;
+        int count = 0;
 
         public void run() {
             try {
@@ -68,15 +72,23 @@ public class ReentrantLockDemo {
                 System.out.println(String.format("%s got the lock", getName()));
                 shouldLock.compareAndSet(false, true);
             } catch (InterruptedException e) {
-                log.error("<======Lock Catch InterruptedException======>");
+                log.error( getName() + "======Lock Catch InterruptedException======>");
+                return;
             }
 
             try {
-                while (shouldLock.get()) {
-                    Thread.sleep(1000);
+                if(Thread.currentThread().isInterrupted()){
+                    System.out.println(String.format("%s  isInterrupted %d", getName(), count));
+                    return;
                 }
-            } catch (InterruptedException e) {
-                log.error("<======Sleep Catch InterruptedException======>");
+                while (shouldLock.get()) {
+                    if(count == 0)
+                    System.out.println(String.format("%s is working %d", getName(), count));
+                    count++;
+//                    Thread.sleep(1000);
+                }
+//            } catch (InterruptedException e) {
+//                log.error("<======Sleep Catch InterruptedException======>");
             } finally {
                 if (lock.isLocked() ) {
                     try {

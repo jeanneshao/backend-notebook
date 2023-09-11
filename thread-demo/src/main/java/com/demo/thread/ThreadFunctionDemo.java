@@ -9,35 +9,37 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ThreadFunctionDemo {
     public static void main(String[] args) {
-        daemonAndJoinDemo();
+//        daemonAndJoinDemo();
 //        interruptDemo();
+        interruptSimple();
     }
+
     @SneakyThrows
-    public static void interruptDemo(){
+    public static void interruptDemo() {
         Thread thread = new Thread(() -> {
             do {
                 boolean isInterrupted = Thread.currentThread().isInterrupted();
 
-                if(isInterrupted){
-                    log.info("<===isInterrupted====>{}",isInterrupted);
-                    log.info("<===isInterrupted====>{}",Thread.currentThread().isInterrupted());
+                if (isInterrupted) {
+                    log.info("<===isInterrupted====>{}", isInterrupted);
+                    log.info("<===isInterrupted====>{}", Thread.currentThread().isInterrupted());
                 }
 
             } while (!Thread.currentThread().isInterrupted());
-        },"IsInterrupted-0");
+        }, "IsInterrupted-0");
         Thread thread2 = new Thread(() -> {
             do {
                 boolean interruted = Thread.interrupted();//会清楚中断状态
                 if (interruted) {
-                    log.info("<===interruted====>{}",interruted);
-                    log.info("<===interruted====>{}",Thread.interrupted());
+                    log.info("<===interruted====>{}", interruted);
+                    log.info("<===interruted====>{}", Thread.interrupted());
                 }
 
             } while (!Thread.currentThread().isInterrupted());
-        },"Interrupted-1");
-        Thread thread3 = new Thread(()->{
+        }, "Interrupted-1");
+        Thread thread3 = new Thread(() -> {
 
-        },"Cathch-2");
+        }, "Cathch-2");
         thread.start();
         thread2.start();
         thread3.start();
@@ -47,12 +49,30 @@ public class ThreadFunctionDemo {
 
     }
 
+    public static void interruptSimple() {
+        new Thread(() -> {
+            try {
+                System.out.println("1");
+                Thread.currentThread().interrupt();
+                System.out.println("2");
+//        } catch (InterruptedException interruptedException){
+//            System.out.println("interrupted");
+//        }
+            } finally {
 
-    public static void daemonAndJoinDemo(){
+            }
+        }
+        ).start();
+
+
+    }
+
+
+    public static void daemonAndJoinDemo() {
         Thread thread = new Thread(() -> {
             for (int i = 0; i < 150; i++) {
 //                try {
-                    log.info("Demo-1===>{}",i);
+                log.info("Demo-1===>{}", i);
 //                    Thread.yield();
 //                } catch (InterruptedException e) {
 //                    log.error("<======Thread Catch Error======>", e);
@@ -66,7 +86,7 @@ public class ThreadFunctionDemo {
         thread.start();
         System.out.println(thread.isAlive());
         ClassLoader contextClassLoader = thread.getContextClassLoader();
-        log.info("contextClassLoader===>{}",contextClassLoader);
+        log.info("contextClassLoader===>{}", contextClassLoader);
 
         thread.interrupt();
 //        boolean interrupted = thread.isInterrupted();
@@ -76,14 +96,16 @@ public class ThreadFunctionDemo {
 
 //        timedJoin(thread);
     }
-    public static void timedJoin(Thread thread){
+
+    public static void timedJoin(Thread thread) {
         try {
-            thread.join(2000,100);
+            thread.join(2000, 100);
         } catch (InterruptedException e) {
             log.error("<======Catch Error======>", e);
         }
     }
-    public static void join(Thread thread){
+
+    public static void join(Thread thread) {
         // 不推荐这样做，会有偶发场景，误发生notify，但是实际上并没有做完
         // 来源：Object.wait注释
         /**
